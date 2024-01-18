@@ -1,10 +1,14 @@
+using BepInEx.Configuration;
 using System;
 
 namespace CSync.Lib;
 
 [Serializable]
-internal class SyncedEntry<T> {
-    internal static T Value { get; private set; }
+public class SyncedEntry<T>(ConfigEntry<T> configEntry) {
+    public T Value { get; private set; } = configEntry.Value;
 
-    internal SyncedEntry() { }
+    public void Apply() {
+        configEntry.Value = Value;
+        configEntry.ConfigFile.Save();
+    }
 }
