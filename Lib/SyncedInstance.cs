@@ -11,7 +11,7 @@ public class SyncedInstance<T> : ByteSerializer<T> {
     public static bool IsClient => NetworkManager.Singleton.IsClient;
     public static bool IsHost => NetworkManager.Singleton.IsHost;
 
-    [NonSerialized] 
+    [NonSerialized]
     protected static int IntSize = 4;
 
     protected static T Default { get; private set; }
