@@ -1,7 +1,8 @@
 using BepInEx.Configuration;
+using CSync.Lib;
 using Unity.Netcode;
 
-namespace CSync.Lib;
+namespace CSync.Util;
 
 public static class Extensions {
     public static void SendMessage(this FastBufferWriter stream, string label, ulong clientId = 0uL) {
@@ -18,7 +19,7 @@ public static class Extensions {
     }
 
     public static T BindPrimitive<T>(this ConfigFile cfg, string section, string key, T defaultVal, string desc) {
-        return BindEntry(cfg, section, key, defaultVal, desc).Value;
+        return cfg.BindEntry(section, key, defaultVal, desc).Value;
     }
 
     public static ConfigEntry<T> BindEntry<T>(this ConfigFile cfg, string section, string key, T defaultVal, string desc) {

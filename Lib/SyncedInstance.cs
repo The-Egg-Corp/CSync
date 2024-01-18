@@ -1,3 +1,4 @@
+using CSync.Util;
 using System;
 using System.IO;
 using System.Runtime.Serialization;
@@ -6,12 +7,12 @@ using Unity.Netcode;
 namespace CSync.Lib;
 
 [Serializable]
-public class SyncedInstance<T> {
+public class SyncedInstance<T> : ByteSerializer<T> {
     public static bool IsClient => NetworkManager.Singleton.IsClient;
     public static bool IsHost => NetworkManager.Singleton.IsHost;
 
-    [NonSerialized] protected static int IntSize = 4;
-    [NonSerialized] static readonly DataContractSerializer serializer = new(typeof(T));
+    [NonSerialized] 
+    protected static int IntSize = 4;
 
     protected static T Default { get; private set; }
     protected static T Instance { get; private set; }
@@ -27,36 +28,12 @@ public class SyncedInstance<T> {
     }
     
     protected static void SyncInstance(byte[] data) {
-        Instance = DeserializeFromBytes(data);
+        Instance = Deserialize(data);
         Synced = true;
     }
 
     protected static void RevertSync() {
         Instance = Default;
         Synced = false;
-    }
-
-    public static byte[] SerializeToBytes(T val) {
-        using MemoryStream stream = new();
-
-        try {
-            serializer.WriteObject(stream, val);
-            return stream.ToArray();
-        }
-        catch (Exception e) {
-            Plugin.Logger.LogError($"Error serializing instance: {e}");
-            return null;
-        }
-    }
-
-    public static T DeserializeFromBytes(byte[] data) {
-        using MemoryStream stream = new(data);
-
-        try {
-            return (T) serializer.ReadObject(stream);
-        } catch (Exception e) {
-            Plugin.Logger.LogError($"Error deserializing instance: {e}");
-            return default;
-        }
     }
 }
