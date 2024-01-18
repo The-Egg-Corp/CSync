@@ -8,7 +8,7 @@ public class ByteSerializer<T> {
     [NonSerialized]
     static readonly DataContractSerializer Serializer = new(typeof(T));
 
-    public static byte[] Serialize(T val) {
+    public static byte[] SerializeToBytes(T val) {
         using MemoryStream stream = new();
 
         try {
@@ -21,7 +21,7 @@ public class ByteSerializer<T> {
         }
     }
 
-    public static T Deserialize(byte[] data) {
+    public static T DeserializeFromBytes(byte[] data) {
         using MemoryStream stream = new(data);
 
         try {

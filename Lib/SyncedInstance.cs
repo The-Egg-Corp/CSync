@@ -1,7 +1,5 @@
 using CSync.Util;
 using System;
-using System.IO;
-using System.Runtime.Serialization;
 using Unity.Netcode;
 
 namespace CSync.Lib;
@@ -28,7 +26,7 @@ public class SyncedInstance<T> : ByteSerializer<T> {
     }
     
     protected static void SyncInstance(byte[] data) {
-        Instance = Deserialize(data);
+        Instance = DeserializeFromBytes(data);
         Synced = true;
     }
 
