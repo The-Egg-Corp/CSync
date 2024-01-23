@@ -4,9 +4,13 @@ using System.Runtime.Serialization;
 
 namespace CSync.Util;
 
+[Serializable]
 public class ByteSerializer<T> {
     [NonSerialized]
     static readonly DataContractSerializer Serializer = new(typeof(T));
+
+    // Ensures the size of an integer is correct for the current system.
+    public static int IntSize => sizeof(int);
 
     public static byte[] SerializeToBytes(T val) {
         using MemoryStream stream = new();

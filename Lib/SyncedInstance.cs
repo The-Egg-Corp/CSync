@@ -6,31 +6,26 @@ namespace CSync.Lib;
 
 [Serializable]
 public class SyncedInstance<T> : ByteSerializer<T> {
+    public static CustomMessagingManager MessageManager => NetworkManager.Singleton.CustomMessagingManager;
     public static bool IsClient => NetworkManager.Singleton.IsClient;
     public static bool IsHost => NetworkManager.Singleton.IsHost;
 
-    [NonSerialized]
-    protected static int IntSize = 4;
+    public static T Default { get; private set; }
+    public static T Instance { get; private set; }
 
-    protected static T Default { get; private set; }
-    protected static T Instance { get; private set; }
-
-    protected static bool Synced;
+    public static bool Synced;
     
-    protected void InitInstance(T instance) {
+    public void InitInstance(T instance) {
         Default = instance;
         Instance = instance;
-        
-        // Ensures the size of an integer is correct for the current system.
-        IntSize = sizeof(int);
     }
     
-    protected static void SyncInstance(byte[] data) {
+    public static void SyncInstance(byte[] data) {
         Instance = DeserializeFromBytes(data);
         Synced = true;
     }
 
-    protected static void RevertSync() {
+    public static void RevertSync() {
         Instance = Default;
         Synced = false;
     }
