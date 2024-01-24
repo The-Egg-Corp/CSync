@@ -119,6 +119,34 @@ internal static void OnReceiveSync(ulong _, FastBufferReader reader) {
     }
 }
 ```
+#### 5. Apply patch to PlayerControllerB
+Add in the following method, replacing "ModName" with the name (or abbreviation) of your mod.
+
+```cs
+[HarmonyPostfix]
+[HarmonyPatch(typeof(PlayerControllerB), "ConnectClientToPlayerObject")]
+public static void InitializeLocalPlayer() {
+    if (IsHost) {
+        MessageManager.RegisterNamedMessageHandler("ModName_OnRequestConfigSync", OnRequestSync);
+        Synced = true;
+
+        return;
+    }
+
+    Synced = false;
+    MessageManager.RegisterNamedMessageHandler("ModName_OnReceiveConfigSync", OnReceiveSync);
+    RequestSync();
+}
+```
+Finally, we need to make sure the client reverts back to their own config upon leaving.
+
+```cs
+[HarmonyPostfix]
+[HarmonyPatch(typeof(GameNetworkManager), "StartDisconnect")]
+public static void PlayerLeave() {
+    Config.RevertSync();
+}
+```
 
 ## License
 This project has the `CC BY-NC-SA 4.0` license.<br>
