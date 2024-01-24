@@ -15,17 +15,15 @@ public class SyncedEntry<T> : ISerializable {
     }
 
     public string ConfigFilePath { get; private set; }
-
     public string Key { get; private set; }
     public string Section { get; private set; }
     public string Description { get; private set; }
-
     public object DefaultValue { get; private set; }
     public object CurrentValue { get; private set; }
 
     public SyncedEntry(ConfigEntry<T> configEntry) {
         Entry = configEntry;
-
+        
         ConfigFilePath = Entry.ConfigFile.ConfigFilePath;
         Key = Entry.Definition.Key;
         Section = Entry.Definition.Section;
