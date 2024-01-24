@@ -19,6 +19,7 @@ public class SyncedEntry<T> : ISerializable {
     public string Section { get; private set; }
     public string Description { get; private set; }
     public object DefaultValue { get; private set; }
+    public object CurrentValue { get; private set; }
 
     public SyncedEntry(ConfigEntry<T> configEntry) {
         Entry = configEntry;
@@ -35,6 +36,7 @@ public class SyncedEntry<T> : ISerializable {
 
         // Reconstruct ConfigEntry
         Entry = cfg.Bind(definition, defaultVal, description);
+        Value = (T) info.GetValue("CurrentValue", typeof(T));
     }
 
     // Serialization
@@ -44,6 +46,7 @@ public class SyncedEntry<T> : ISerializable {
         info.AddValue("Section", Section);
         info.AddValue("Description", Description);
         info.AddValue("DefaultValue", DefaultValue);
+        info.AddValue("CurrentValue", CurrentValue);
     }
 
     public void Init() {
@@ -52,5 +55,6 @@ public class SyncedEntry<T> : ISerializable {
         Section = Entry.Definition.Section;
         Description = Entry.Description.Description;
         DefaultValue = Entry.DefaultValue;
+        CurrentValue = Entry.Value;
     }
 }
