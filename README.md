@@ -1,5 +1,6 @@
 # CSync
-BepInEx configuration file syncing library.
+A BepInEx configuration file syncing library.<br>
+This library will help you force clients to have the same settings as the host!
 
 ## Features
 - Can serialize a `ConfigEntry` with a drop-in replacement.
@@ -33,7 +34,6 @@ public class Config : SyncedInstance<Config> {
 
     [DataMember] public SyncedEntry<float> MOVEMENT_SPEED { get; private set; }
     [DataMember] public SyncedEntry<float> CLIMB_SPEED { get; private set; }
-    [DataMember] public SyncedEntry<float> SINK_SPEED_MULTIPLIER { get; private set; }
 }
 ```
 
@@ -56,15 +56,14 @@ public Config(ConfigFile cfg) {
     CLIMB_SPEED = cfg.BindSyncedEntry("Movement", "fClimbSpeed", 3.9f,
         "The base speed at which the player climbs. This is NOT a multiplier."
     );
-
-    SINK_SPEED_MULTIPLIER = cfg.BindSyncedEntry("Movement", "fSinkSpeedMultiplier", 0.16f,
-        "Value to multiply the sinking speed by when in quicksand.\n" +
-        "Don't want to sink as fast? Decrease this value."
-    );
 }
 ```
 
 #### 4. Add synchronization methods.
+Finally
+
+Now when we reference `.Value` on an entry, it will be the same as whatever the host has set!
+
 ```cs
 internal static void RequestSync() {
     if (!IsClient) return;
