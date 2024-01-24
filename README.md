@@ -24,16 +24,16 @@ public class SyncedConfig : SyncedInstance<SyncedConfig>
 ```
 
 #### 2. Create/modify entries.
-> [!WARNING]
-> Mixing `ConfigEntry` and `SyncedEntry` within the same synced class will produce errors and is not advised.<br>
-> Primitives are allowed however as they can be serialized.
-
 Within the `SyncedConfig` class, we can now begin writing out our config entries that we want to be synchronized.<br>
 We must also mark them with the `[DataMember]` attribute for the serializer to recognize them.
 
 ```cs
 [DataContract]
 public class SyncedConfig : SyncedInstance<SyncedConfig> {
+    // Client-side only
+    public ConfigEntry<float> DISPLAY_DEBUG_INFO { get; private set; }
+
+    // Synchronized
     [DataMember] public SyncedEntry<float> MOVEMENT_SPEED { get; private set; }
     [DataMember] public SyncedEntry<float> CLIMB_SPEED { get; private set; }
 }
