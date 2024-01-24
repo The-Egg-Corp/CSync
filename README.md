@@ -1,6 +1,10 @@
 # CSync
 Lethal Company library for synchronizing configuration files.
 
+> [!WARNING]
+> This project is a work-in-progress and will likely **NOT** work.<br>
+> For now, you can rely on the [Lethal Wiki](https://lethal.wiki/dev/intermediate/custom-config-syncing) config syncing guide.
+
 ## Setup
 1. Download and extract BepInEx v5 into your game directory.
 2. Drop the `CSync.dll` into the `../BepInEx/plugins` folder.
