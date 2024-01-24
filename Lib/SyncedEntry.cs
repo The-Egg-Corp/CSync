@@ -6,12 +6,12 @@ namespace CSync.Lib;
 
 [Serializable]
 public class SyncedEntry<T> : ISerializable {
-    [NonSerialized] readonly string ConfigFilePath;
-    [NonSerialized] readonly string Key;
-    [NonSerialized] readonly string Section;
-    [NonSerialized] readonly string Description;
-    [NonSerialized] readonly object DefaultValue;
-    [NonSerialized] readonly object CurrentValue;
+    [NonSerialized] string ConfigFilePath;
+    [NonSerialized] string Key;
+    [NonSerialized] string Section;
+    [NonSerialized] string Description;
+    [NonSerialized] object DefaultValue;
+    [NonSerialized] object CurrentValue;
 
     [NonSerialized] public readonly ConfigEntry<T> Entry;
 
@@ -22,13 +22,7 @@ public class SyncedEntry<T> : ISerializable {
 
     public SyncedEntry(ConfigEntry<T> configEntry) {
         Entry = configEntry;
-        
-        ConfigFilePath = Entry.ConfigFile.ConfigFilePath;
-        Key = Entry.Definition.Key;
-        Section = Entry.Definition.Section;
-        Description = Entry.Description.Description;
-        DefaultValue = Entry.DefaultValue;
-        CurrentValue = Entry.Value;
+        Init();
     }
 
     // Deserialization
@@ -42,6 +36,8 @@ public class SyncedEntry<T> : ISerializable {
         // Reconstruct ConfigEntry
         Entry = cfg.Bind(definition, defaultVal, description);
         Value = (T) info.GetValue("CurrentValue", typeof(T));
+
+        Init();
     }
 
     // Serialization
@@ -52,5 +48,14 @@ public class SyncedEntry<T> : ISerializable {
         info.AddValue("Description", Description);
         info.AddValue("DefaultValue", DefaultValue);
         info.AddValue("CurrentValue", CurrentValue);
+    }
+
+    public void Init() {
+        ConfigFilePath = Entry.ConfigFile.ConfigFilePath;
+        Key = Entry.Definition.Key;
+        Section = Entry.Definition.Section;
+        Description = Entry.Description.Description;
+        DefaultValue = Entry.DefaultValue;
+        CurrentValue = Entry.Value;
     }
 }
