@@ -33,7 +33,7 @@ We must also mark them with the `[DataMember]` attribute for the serializer to r
 
 ```cs
 [DataContract]
-public class SyncedConfig : SyncedInstance<Config> {
+public class SyncedConfig : SyncedInstance<SyncedConfig> {
     [DataMember] public SyncedEntry<float> MOVEMENT_SPEED { get; private set; }
     [DataMember] public SyncedEntry<float> CLIMB_SPEED { get; private set; }
 }
@@ -45,7 +45,7 @@ Before binding, we will add the following line at the top of the constructor.
 InitInstance(this);
 ```
 
-We can now bind our entries to the BepInEx config file like usual, however we will use the dedicated `BindSyncedEntry` extension method provided by CSync.
+We can now bind our entries to the BepInEx config file like usual, however we will instead use the dedicated `BindSyncedEntry` extension method provided by CSync.
 
 ```cs
 public SyncedConfig(ConfigFile cfg) {
