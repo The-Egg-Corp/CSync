@@ -38,7 +38,12 @@ public class Config : SyncedInstance<Config> {
 ```
 
 #### 3. BepInEx binding.<br>
-We will now bind our entries to the BepInEx config file like usual, however we will use the dedicated `BindSyncedEntry` extension method provided by CSync.
+Before binding, we will add the following line at the top of the constructor.
+```cs
+InitInstance(this);
+```
+
+We can now bind our entries to the BepInEx config file like usual, however we will use the dedicated `BindSyncedEntry` extension method provided by CSync.
 
 ```cs
 public Config(ConfigFile cfg) {
