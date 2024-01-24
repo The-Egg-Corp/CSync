@@ -1,4 +1,4 @@
-# CSync
+# CSync <img align="right" width="128" height="128" src="https://media.discordapp.net/attachments/974491955864150046/1199740908879491162/CSync.png?ex=65c3a4ca&is=65b12fca&hm=1fd441d8eec89e22e16ab5963ec80244366a52aa0c12cdb01b069071bd1140d1&=&format=webp&quality=lossless&width=671&height=671">
 A BepInEx configuration file syncing library.<br>
 This library will help you force clients to have the same settings as the host!
 
@@ -15,7 +15,7 @@ This library will help you force clients to have the same settings as the host!
 
 ## Usage
 #### 1. Enable serialization.
-Firstly, we will create a new Config class that will inherit from `SyncedInstance`.<br>
+To begin, we will create a new Config class that will inherit from `SyncedInstance`.<br>
 We must then add the `[DataContract]` attribute for this to be synced with clients.
 
 ```cs
@@ -60,7 +60,8 @@ public Config(ConfigFile cfg) {
 ```
 
 #### 4. Add synchronization methods.
-Finally
+Finally, we will place the following methods within the class, replacing any instances of `Plugin.GUID` with our own.<br>
+Alternatively, make sure you have a `GUID` property in your `Plugin.cs` file.
 
 Now when we reference `.Value` on an entry, it will be the same as whatever the host has set!
 
