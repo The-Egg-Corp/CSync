@@ -1,5 +1,5 @@
 # CSync
-Lethal Company library for synchronizing configuration files.
+BepInEx configuration file syncing library.
 
 ## Features
 - Can serialize a `ConfigEntry` with a drop-in replacement.
