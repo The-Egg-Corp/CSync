@@ -15,7 +15,7 @@ This library will help you force clients to have the same settings as the host!
 
 ## Usage
 #### 1. Enable serialization.
-Firstly, we will create a new Config class that will inherit from `SyncedInstance`.<br>
+To begin, we will create a new Config class that will inherit from `SyncedInstance`.<br>
 We must then add the `[DataContract]` attribute for this to be synced with clients.
 
 ```cs
