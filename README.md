@@ -60,7 +60,8 @@ public Config(ConfigFile cfg) {
 ```
 
 #### 4. Add synchronization methods.
-Finally
+Finally, we will place the following methods within the class, replacing any instances of `Plugin.GUID` with our own.<br>
+Alternatively, make sure you have a `GUID` property in your `Plugin.cs` file.
 
 Now when we reference `.Value` on an entry, it will be the same as whatever the host has set!
 
