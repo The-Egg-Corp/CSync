@@ -1,4 +1,5 @@
 using BepInEx;
+using BepInEx.Configuration;
 using BepInEx.Logging;
 
 using CSync.Core;
@@ -10,6 +11,8 @@ public class Plugin : BaseUnityPlugin {
     internal static new ManualLogSource Logger { get; private set; }
     internal static Plugin Instance { get; private set; }
     //internal static Harmony Harmony;
+
+    internal static ConfigFile ConfigFile;
 
     private void Awake() {
         Instance = this;
@@ -24,5 +27,9 @@ public class Plugin : BaseUnityPlugin {
         //catch (Exception e) {
         //    Logger.LogError(e);
         //}
+    }
+
+    public void RegisterConfig(ConfigFile file) {
+        ConfigFile = file;
     }
 }

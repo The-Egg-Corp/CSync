@@ -17,7 +17,6 @@ public class SyncedConfig : SyncedInstance<SyncedConfig> {
         InitInstance(this);
 
         GUID = modGuid;
-        Plugin.ConfigFile = cfg;
     }
 
     public static void RequestSync() {
