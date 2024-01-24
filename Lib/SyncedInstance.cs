@@ -5,7 +5,7 @@ using Unity.Netcode;
 namespace CSync.Lib;
 
 [Serializable]
-public class SyncedInstance<T> : ByteSerializer<T> {
+public class SyncedInstance<T> : ByteSerializer<T> where T : class {
     public static CustomMessagingManager MessageManager => NetworkManager.Singleton.CustomMessagingManager;
     public static bool IsClient => NetworkManager.Singleton.IsClient;
     public static bool IsHost => NetworkManager.Singleton.IsHost;
