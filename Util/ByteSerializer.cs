@@ -20,7 +20,7 @@ public class ByteSerializer<T> {
             return stream.ToArray();
         }
         catch (Exception e) {
-            Plugin.Logger.LogError($"Error serializing instance: {e}");
+            CSync.Logger.LogError($"Error serializing instance: {e}");
             return null;
         }
     }
@@ -31,7 +31,7 @@ public class ByteSerializer<T> {
         try {
             return (T) Serializer.ReadObject(stream);
         } catch (Exception e) {
-            Plugin.Logger.LogError($"Error deserializing instance: {e}");
+            CSync.Logger.LogError($"Error deserializing instance: {e}");
             return default;
         }
     }
