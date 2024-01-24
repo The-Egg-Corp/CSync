@@ -6,20 +6,19 @@ namespace CSync.Lib;
 
 [Serializable]
 public class SyncedEntry<T> : ISerializable {
-    [NonSerialized]
-    public readonly ConfigEntry<T> Entry;
+    [NonSerialized] readonly string ConfigFilePath;
+    [NonSerialized] readonly string Key;
+    [NonSerialized] readonly string Section;
+    [NonSerialized] readonly string Description;
+    [NonSerialized] readonly object DefaultValue;
+    [NonSerialized] readonly object CurrentValue;
+
+    [NonSerialized] public readonly ConfigEntry<T> Entry;
 
     public T Value {
         get => Entry.Value;
         set => Entry.Value = value;
     }
-
-    public string ConfigFilePath { get; private set; }
-    public string Key { get; private set; }
-    public string Section { get; private set; }
-    public string Description { get; private set; }
-    public object DefaultValue { get; private set; }
-    public object CurrentValue { get; private set; }
 
     public SyncedEntry(ConfigEntry<T> configEntry) {
         Entry = configEntry;
