@@ -20,14 +20,14 @@ We must then add the `[DataContract]` attribute for this to be synced with clien
 
 ```cs
 [DataContract]
-public class SyncedConfig : SyncedInstance<Config>
+public class SyncedConfig : SyncedInstance<SyncedConfig>
 ```
 
+#### 2. Create/modify entries.
 > [!WARNING]
 > Mixing `ConfigEntry` and `SyncedEntry` within the same synced class will produce errors and is not advised.<br>
 > Primitives are allowed however as they can be serialized.
 
-#### 2. Create/modify entries.
 Within the `SyncedConfig` class, we can now begin writing out our config entries that we want to be synchronized.<br>
 We must also mark them with the `[DataMember]` attribute for the serializer to recognize them.
 
@@ -48,7 +48,7 @@ InitInstance(this);
 We can now bind our entries to the BepInEx config file like usual, however we will use the dedicated `BindSyncedEntry` extension method provided by CSync.
 
 ```cs
-public Config(ConfigFile cfg) {
+public SyncedConfig(ConfigFile cfg) {
     InitInstance(this);
 
     MOVEMENT_SPEED = cfg.BindSyncedEntry("Movement", "fMovementSpeed", 4.1f,
