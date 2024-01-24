@@ -15,23 +15,25 @@ This library will help you force clients to have the same settings as the host!
 
 ## Usage
 #### 1. Enable serialization.
-To begin, we will create a new Config class that will inherit from `SyncedInstance`.<br>
+To begin, we will create a new class that will inherit from `SyncedInstance`.<br>
 We must then add the `[DataContract]` attribute for this to be synced with clients.
 
 ```cs
 [DataContract]
-public class Config : SyncedInstance<Config>
+public class SyncedConfig : SyncedInstance<Config>
 ```
 
+> [!WARNING]
+> Mixing `ConfigEntry` and `SyncedEntry` within the same synced class will produce errors and is not advised.<br>
+> Primitives are allowed however as they can be serialized.
+
 #### 2. Create/modify entries.
-Within the Config class, we can now begin writing out our config entries that we want to be synchronized.<br>
+Within the `SyncedConfig` class, we can now begin writing out our config entries that we want to be synchronized.<br>
 We must also mark them with the `[DataMember]` attribute for the serializer to recognize them.
 
 ```cs
 [DataContract]
-public class Config : SyncedInstance<Config> {
-    public ConfigEntry<bool> PLUGIN_ENABLED { get; private set; }
-
+public class SyncedConfig : SyncedInstance<Config> {
     [DataMember] public SyncedEntry<float> MOVEMENT_SPEED { get; private set; }
     [DataMember] public SyncedEntry<float> CLIMB_SPEED { get; private set; }
 }
