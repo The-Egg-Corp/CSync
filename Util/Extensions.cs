@@ -1,9 +1,14 @@
 using BepInEx.Configuration;
 using CSync.Lib;
+using System;
+using System.Runtime.Serialization;
 using Unity.Netcode;
 
 namespace CSync.Util;
 
+/// <summary>
+/// Contains helpful extension methods to aid with synchronization and reduce code duplication.
+/// </summary>
 public static class Extensions {
     public static void SendMessage(this FastBufferWriter stream, string label, ulong clientId = 0uL) {
         bool fragment = stream.Capacity > 1300;
@@ -18,15 +23,28 @@ public static class Extensions {
         msgManager.SendNamedMessage(label, clientId, stream, delivery);
     }
 
-    public static T BindPrimitive<T>(this ConfigFile cfg, string section, string key, T defaultVal, string desc) {
+    public static V BindPrimitive<V>(this ConfigFile cfg, string section, string key, V defaultVal, string desc) {
         return cfg.Bind(section, key, defaultVal, desc).Value;
     }
 
-    public static SyncedEntry<T> BindSyncedEntry<T>(this ConfigFile cfg, string section, string key, T defaultVal, string desc) {
+    public static SyncedEntry<V> BindSyncedEntry<V>(this ConfigFile cfg, 
+        string section, string key, V defaultVal, string desc
+    ) where V : unmanaged {
         return cfg.Bind(section, key, defaultVal, desc).ToSyncedEntry();
     }
 
-    public static SyncedEntry<T> ToSyncedEntry<T>(this ConfigEntry<T> entry) {
-        return new SyncedEntry<T>(entry);
+    public static SyncedEntry<V> ToSyncedEntry<V>(this ConfigEntry<V> entry) where V : unmanaged {
+        return new SyncedEntry<V>(entry);
+    }
+
+    public static T GetObject<T>(this SerializationInfo info, string key) {
+        return (T) info.GetValue(key, typeof(T));
+    }
+
+    internal static ConfigEntry<V> Reconstruct<V>(this ConfigFile cfg, SerializationInfo info) {
+        ConfigDefinition definition = new(info.GetString("Section"), info.GetString("Key"));
+        ConfigDescription description = new(info.GetString("Description"));
+
+        return cfg.Bind(definition, info.GetObject<V>("DefaultValue"), description);
     }
 }

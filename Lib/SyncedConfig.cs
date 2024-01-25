@@ -7,14 +7,14 @@ using CSync.Util;
 namespace CSync.Lib;
 
 [Serializable]
-public class ConfigSync : SyncedInstance<ConfigSync> {
+public class SyncedConfig : SyncedInstance<SyncedConfig> {
     readonly string GUID;
 
     public event EventHandler SyncComplete;
     
     static void LogErr(string str) => CSync.Logger.LogError(str);
 
-    ConfigSync(string modGuid) {
+    SyncedConfig(string modGuid) {
         InitInstance(this);
 
         GUID = modGuid;

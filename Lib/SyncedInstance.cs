@@ -4,6 +4,12 @@ using Unity.Netcode;
 
 namespace CSync.Lib;
 
+/// <summary>
+/// Generic class that can be serialized to bytes.<br></br>
+/// Handles syncing and reverting as well as holding references to the client-side and synchronized instances.<br></br>
+/// <br></br><br></br>
+/// This class should always be inherited from, never use it directly!
+/// </summary>
 [Serializable]
 public class SyncedInstance<T> : ByteSerializer<T> where T : class {
     public static CustomMessagingManager MessageManager => NetworkManager.Singleton.CustomMessagingManager;

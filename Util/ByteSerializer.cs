@@ -4,6 +4,10 @@ using System.Runtime.Serialization;
 
 namespace CSync.Util;
 
+/// <summary>
+/// Responsible for serializing to and from bytes via a <see cref="MemoryStream"/>.<br></br>
+/// Uses <see cref="DataContractSerializer"/> as a fast and safer alternative to BinaryFormatter.
+/// </summary>
 [Serializable]
 public class ByteSerializer<T> {
     [NonSerialized]

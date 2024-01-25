@@ -1,10 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFrameworks>netstandard2.1;net472</TargetFrameworks>
     <AssemblyName>CSync</AssemblyName>
-    <Description>Configuration file syncing library for Lethal Company.</Description>
-    <Version>1.0.0</Version>
+    <Description>Configuration file syncing library for BepInEx.</Description>
+    <Version>1.0.3</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <RestoreAdditionalProjectSources>
@@ -13,6 +12,23 @@
       https://nuget.samboy.dev/v3/index.json
     </RestoreAdditionalProjectSources>
     <RootNamespace>CSync</RootNamespace>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Title>$(AssemblyName)</Title>
+    <Authors>Owen3H</Authors>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/Owen3H/CSync.git</RepositoryUrl>
+    <NeutralLanguage>en-GB</NeutralLanguage>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;1591</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -38,7 +54,18 @@
     </Reference>
   </ItemGroup>
   
+  <ItemGroup>
+    <None Update="LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+  
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="echo &quot;.&quot; &gt; &quot;E:\Programs\Steam\steamapps\common\Lethal Company\BepInEx\plugins\$(TargetName).dll&quot; &amp;&amp; xcopy /q /y /i &quot;$(TargetPath)&quot; &quot;E:\Programs\Steam\steamapps\common\Lethal Company\BepInEx\plugins\$(TargetName).dll&quot;" />
+    <Exec Command="echo &quot;.&quot; &gt; &quot;E:\Programs\Steam\steamapps\common\Lethal Company\BepInEx\plugins\CSync\$(TargetName).dll&quot; &amp;&amp; xcopy /q /y /i &quot;$(TargetPath)&quot; &quot;E:\Programs\Steam\steamapps\common\Lethal Company\BepInEx\plugins\CSync\$(TargetName).dll&quot;" />
   </Target>
 </Project>
