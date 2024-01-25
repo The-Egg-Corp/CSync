@@ -16,35 +16,6 @@ This library will help you force clients to have the same settings as the host!
 ## Usage
 See the Thunderstore [wiki](https://thunderstore.io/c/lethal-company/p/Owen3H/CSync/wiki/) for a guide to using CSync.
 
-#### 5. Apply patch to PlayerControllerB
-Add in the following method, replacing "ModName" with the name (or abbreviation) of your mod.
-
-```cs
-[HarmonyPostfix]
-[HarmonyPatch(typeof(PlayerControllerB), "ConnectClientToPlayerObject")]
-public static void InitializeLocalPlayer() {
-    if (IsHost) {
-        MessageManager.RegisterNamedMessageHandler("ModName_OnRequestConfigSync", OnRequestSync);
-        Synced = true;
-
-        return;
-    }
-
-    Synced = false;
-    MessageManager.RegisterNamedMessageHandler("ModName_OnReceiveConfigSync", OnReceiveSync);
-    RequestSync();
-}
-```
-Finally, we need to make sure the client reverts back to their own config upon leaving.
-
-```cs
-[HarmonyPostfix]
-[HarmonyPatch(typeof(GameNetworkManager), "StartDisconnect")]
-public static void PlayerLeave() {
-    Config.RevertSync();
-}
-```
-
 ## License
 This project has the `CC BY-NC-SA 4.0` license.<br>
 This means the following terms apply:
