@@ -3,7 +3,7 @@
     <TargetFrameworks>netstandard2.1;net472</TargetFrameworks>
     <AssemblyName>CSync</AssemblyName>
     <Description>Configuration file syncing library for BepInEx.</Description>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <RestoreAdditionalProjectSources>
@@ -22,24 +22,19 @@
     <PackageProjectUrl>https://thunderstore.io/c/lethal-company/p/Owen3H/CSync</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Owen3H/CSync.git</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <Description>
-      Configuration file syncing library for BepInEx. 
-      Allows serialization of a ConfigEntry with a drop in replacement.
+    <Description>Configuration file syncing library for BepInEx.
+    Allows serialization of a ConfigEntry with a drop in replacement.
       
-      A usage guide can be found on the Thunderstore wiki.
-      https://thunderstore.io/c/lethal-company/p/Owen3H/CSync/wiki/
+    A usage guide can be found on the Thunderstore wiki.
+    https://thunderstore.io/c/lethal-company/p/Owen3H/CSync/wiki/
     </Description>
     <PackageTags>config bepinex sync library lethalcompany</PackageTags>
     <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
     
   <ItemGroup>
-    <Content Include="README.md" Pack="true" PackagePath=""/>
-	<Content Include="LICENSE" Pack="true" PackagePath=""/>
-	<Content Include="icon.png" Pack="true" PackagePath=""/>
+	<Content Include="icon.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -77,6 +72,10 @@
     <None Update="LICENSE">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
+    </None>
+    <None Update="nuget.README.md">
+      <PackagePath>\</PackagePath>
+      <Pack>True</Pack>
     </None>
     <None Update="README.md">
       <Pack>True</Pack>
