@@ -1,6 +1,5 @@
 using BepInEx.Configuration;
 using CSync.Lib;
-using System;
 using System.Runtime.Serialization;
 using Unity.Netcode;
 

@@ -12,16 +12,35 @@
       https://nuget.samboy.dev/v3/index.json
     </RestoreAdditionalProjectSources>
     <RootNamespace>CSync</RootNamespace>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Title>$(AssemblyName)</Title>
-    <Authors>Owen3H</Authors>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/Owen3H/CSync.git</RepositoryUrl>
     <NeutralLanguage>en-GB</NeutralLanguage>
+  </PropertyGroup>
+    
+  <PropertyGroup>
+    <PackageId>Owen3H.BepInEx.CSync</PackageId>
+    <Authors>Owen3H</Authors>
+    <PackageProjectUrl>https://thunderstore.io/c/lethal-company/p/Owen3H/CSync</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Owen3H/CSync.git</RepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Description>
+      Configuration file syncing library for BepInEx. 
+      Allows serialization of a ConfigEntry with a drop in replacement.
+      
+      A usage guide can be found on the Thunderstore wiki.
+      https://thunderstore.io/c/lethal-company/p/Owen3H/CSync/wiki/
+    </Description>
+    <PackageTags>config bepinex sync library lethalcompany</PackageTags>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
+    
+  <ItemGroup>
+    <Content Include="README.md" Pack="true" PackagePath=""/>
+	<Content Include="LICENSE" Pack="true" PackagePath=""/>
+	<Content Include="icon.png" Pack="true" PackagePath=""/>
+  </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;1591</NoWarn>
