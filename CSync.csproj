@@ -21,7 +21,7 @@
     <Authors>Owen3H</Authors>
     <PackageProjectUrl>https://thunderstore.io/c/lethal-company/p/Owen3H/CSync</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Owen3H/CSync.git</RepositoryUrl>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReadmeFile>nuget.README.md</PackageReadmeFile>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Description>Configuration file syncing library for BepInEx.
     Allows serialization of a ConfigEntry with a drop in replacement.
@@ -31,10 +31,12 @@
     </Description>
     <PackageTags>config bepinex sync library lethalcompany</PackageTags>
     <PackageIcon>icon.png</PackageIcon>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
     
   <ItemGroup>
 	<Content Include="icon.png" Pack="true" PackagePath="" />
+	<Content Include="nuget.README.md" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
