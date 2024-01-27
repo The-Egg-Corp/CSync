@@ -66,13 +66,13 @@ public class SyncedConfig : SyncedInstance<SyncedConfig> {
 
         try {
             SyncInstance(data);
-            Instance.OnSyncCompleted(EventArgs.Empty);
+            Instance.OnSyncCompleted();
         } catch(Exception e) {
             LogErr($"Error syncing config instance!\n{e}");
         }
     }
 
-    protected virtual void OnSyncCompleted(EventArgs e) {
-        SyncComplete?.Invoke(this, e);
+    void OnSyncCompleted() {
+        SyncComplete?.Invoke(this, EventArgs.Empty);
     }
 }
