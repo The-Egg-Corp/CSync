@@ -3,6 +3,7 @@ using BepInEx.Configuration;
 using BepInEx.Logging;
 
 using CSync.Core;
+
 using System.Collections.Generic;
 
 namespace CSync;
@@ -25,7 +26,7 @@ public class CSync : BaseUnityPlugin {
     internal static ConfigFile GetConfigFile(string path) {
         bool exists = FileCache.TryGetValue(path, out ConfigFile cfg);
         if (!exists) {
-            cfg = new ConfigFile(path, false);
+            cfg = new(path, false);
             FileCache.Add(path, cfg);
         }
 

@@ -22,17 +22,19 @@ public static class Extensions {
         msgManager.SendNamedMessage(label, clientId, stream, delivery);
     }
 
-    public static V BindPrimitive<V>(this ConfigFile cfg, string section, string key, V defaultVal, string desc) {
+    public static V BindPrimitive<V>(this ConfigFile cfg, 
+        string section, string key, V defaultVal, string desc
+    ) {
         return cfg.Bind(section, key, defaultVal, desc).Value;
     }
 
     public static SyncedEntry<V> BindSyncedEntry<V>(this ConfigFile cfg, 
         string section, string key, V defaultVal, string desc
-    ) where V : unmanaged {
+    ) {
         return cfg.Bind(section, key, defaultVal, desc).ToSyncedEntry();
     }
 
-    public static SyncedEntry<V> ToSyncedEntry<V>(this ConfigEntry<V> entry) where V : unmanaged {
+    public static SyncedEntry<V> ToSyncedEntry<V>(this ConfigEntry<V> entry) {
         return new SyncedEntry<V>(entry);
     }
 

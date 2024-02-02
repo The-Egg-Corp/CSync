@@ -7,26 +7,20 @@ using CSync.Util;
 namespace CSync.Lib;
 
 [Serializable]
-public class SyncedConfig : SyncedInstance<SyncedConfig> {
-    readonly string GUID;
-
-    public event EventHandler SyncComplete;
-    
+public class SyncedConfig<T> : SyncedInstance<T> where T : SyncedConfig<T> {
     static void LogErr(string str) => CSync.Logger.LogError(str);
 
-    SyncedConfig(string modGuid) {
-        InitInstance(this);
+    public event EventHandler SyncComplete;
+    string GUID;
 
-        GUID = modGuid;
-    }
-
-    public static void RequestSync() {
+    public void RequestSync(string modGuid) {
         if (!IsClient) return;
 
         using FastBufferWriter stream = new(IntSize, Allocator.Temp);
 
         // Method `OnRequestSync` will then get called on host.
-        stream.SendMessage($"{Instance.GUID}_OnRequestConfigSync");
+        GUID = modGuid;
+        stream.SendMessage($"{GUID}_OnRequestConfigSync");
     }
 
     public static void OnRequestSync(ulong clientId, FastBufferReader _) {

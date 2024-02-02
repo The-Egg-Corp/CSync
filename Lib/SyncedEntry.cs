@@ -10,7 +10,7 @@ namespace CSync.Lib;
 /// Can serialize and deserialize itself to avoid runtime errors when syncing configs.</br>
 /// </summary>
 [Serializable]
-public class SyncedEntry<V> : ISerializable where V : unmanaged {
+public class SyncedEntry<V> : ISerializable {
     [NonSerialized] string ConfigFilePath;
     [NonSerialized] string Key;
     [NonSerialized] string Section;
@@ -18,21 +18,11 @@ public class SyncedEntry<V> : ISerializable where V : unmanaged {
     [NonSerialized] object DefaultValue;
     [NonSerialized] object CurrentValue;
 
-    [NonSerialized] readonly ConfigEntry<V> Entry;
-
-    public ConfigDefinition Definition => Entry.Definition;
-    public ConfigDescription Description => Entry.Description;
-    public ConfigFile ConfigFile => Entry.ConfigFile;
-    public Type SettingType => Entry.SettingType;
+    [NonSerialized] public readonly ConfigEntry<V> Entry;
 
     public V Value {
         get => Entry.Value;
         set => Entry.Value = value;
-    }
-
-    public object BoxedValue {
-        get => Entry.Value;
-        set => Entry.Value = (V) value;
     }
 
     // Exposes the event from the underlying ConfigEntry
