@@ -5,6 +5,7 @@ using BepInEx.Logging;
 using CSync.Core;
 
 using System.Collections.Generic;
+using System.IO;
 
 namespace CSync;
 
@@ -23,11 +24,13 @@ public class CSync : BaseUnityPlugin {
         Logger = base.Logger;
     }
 
-    internal static ConfigFile GetConfigFile(string path) {
-        bool exists = FileCache.TryGetValue(path, out ConfigFile cfg);
+    internal static ConfigFile GetConfigFile(string fileName) {
+        bool exists = FileCache.TryGetValue(fileName, out ConfigFile cfg);
         if (!exists) {
-            cfg = new(path, false);
-            FileCache.Add(path, cfg);
+            string absPath = Path.Combine(Paths.ConfigPath, fileName);
+
+            cfg = new(absPath, false);
+            FileCache.Add(fileName, cfg);
         }
 
         return cfg;
