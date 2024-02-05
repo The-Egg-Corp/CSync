@@ -16,7 +16,6 @@ public class SyncedInstance<T> : ByteSerializer<T> where T : class {
     public static bool IsClient => NetworkManager.Singleton.IsClient;
     public static bool IsHost => NetworkManager.Singleton.IsHost;
 
-    //[IgnoreDataMember]
     public static T Default { get; private set; }
     public static T Instance { get; private set; }
 
@@ -29,7 +28,7 @@ public class SyncedInstance<T> : ByteSerializer<T> where T : class {
     
     public static void SyncInstance(byte[] data) {
         Instance = DeserializeFromBytes(data);
-        Synced = true;
+        Synced = Instance != null;
     }
 
     public static void RevertSync() {
