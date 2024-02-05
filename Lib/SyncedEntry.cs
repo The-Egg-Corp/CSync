@@ -49,9 +49,6 @@ public class SyncedEntry<V> : ISerializable {
         Entry = cfg.Reconstruct<V>(info);
         Value = info.GetObject<V>("CurrentValue");
 
-        //CSync.Logger.LogDebug($"Expected config file path: {cfg.ConfigFilePath}");
-        //CSync.Logger.LogDebug($"Deserialized key: `{info.GetString("Key")}`. Value: {Value}");
-
         Init();
     }
 
@@ -63,20 +60,13 @@ public class SyncedEntry<V> : ISerializable {
         info.AddValue("Description", Desc);
         info.AddValue("DefaultValue", DefaultValue);
         info.AddValue("CurrentValue", CurrentValue);
-
-        //CSync.Logger.LogDebug($"Serialized key: `{Key}`. Value: {CurrentValue}");
     }
 
     public void Init() {
-        // Absolute path to the config file on the current system.
         ConfigFileName = Path.GetFileName(Entry.ConfigFile.ConfigFilePath);
-
-        // Metadata for this entry's ConfigFile.
         Key = Entry.Definition.Key;
         Section = Entry.Definition.Section;
         Desc = Entry.Description.Description;
-
-        // The values assigned to this entry.
         DefaultValue = Entry.DefaultValue;
         CurrentValue = Entry.Value;
     }
