@@ -12,31 +12,28 @@ namespace CSync.Lib;
 /// </summary>
 [Serializable]
 public class SyncedEntry<V> : ISerializable {
-    [NonSerialized] string ConfigFileName;
-
-    [NonSerialized] string Key;
-    [NonSerialized] string Section;
-    [NonSerialized] string Desc;
-
-    [NonSerialized] object DefaultValue;
-    [NonSerialized] object CurrentValue;
-
     [NonSerialized] public readonly ConfigEntry<V> Entry;
+
+    string ConfigFileName => Path.GetFileName(Entry.ConfigFile.ConfigFilePath);
+    public string Key => Entry.Definition.Key;
+    public string Section => Entry.Definition.Section;
+    public string Description => Entry.Description.Description;
+    public object DefaultValue => Entry.DefaultValue;
 
     public V Value {
         get => Entry.Value;
         set => Entry.Value = value;
     }
 
-    // Exposes the event from the underlying ConfigEntry
+    public static implicit operator V(SyncedEntry<V> e) => e.Value;
+
     public event EventHandler SettingChanged {
-        add { Entry.SettingChanged += value; }
-        remove { Entry.SettingChanged -= value; }
+        add => Entry.SettingChanged += value;
+        remove => Entry.SettingChanged -= value;
     }
 
     public SyncedEntry(ConfigEntry<V> cfgEntry) {
         Entry = cfgEntry;
-        Init();
     }
 
     // Deserialization
@@ -48,8 +45,6 @@ public class SyncedEntry<V> : ISerializable {
         // Reconstruct entry and reassign its value.
         Entry = cfg.Reconstruct<V>(info);
         Value = info.GetObject<V>("CurrentValue");
-
-        Init();
     }
 
     // Serialization
@@ -57,17 +52,12 @@ public class SyncedEntry<V> : ISerializable {
         info.AddValue("ConfigFileName", ConfigFileName);
         info.AddValue("Key", Key);
         info.AddValue("Section", Section);
-        info.AddValue("Description", Desc);
+        info.AddValue("Description", Description);
         info.AddValue("DefaultValue", DefaultValue);
-        info.AddValue("CurrentValue", CurrentValue);
+        info.AddValue("CurrentValue", Value);
     }
 
-    public void Init() {
-        ConfigFileName = Path.GetFileName(Entry.ConfigFile.ConfigFilePath);
-        Key = Entry.Definition.Key;
-        Section = Entry.Definition.Section;
-        Desc = Entry.Description.Description;
-        DefaultValue = Entry.DefaultValue;
-        CurrentValue = Entry.Value;
+    public override string ToString() {
+        return $"Key: {Key}\nDefault Value: {DefaultValue}\nCurrent Value: {Value}";
     }
 }
