@@ -10,7 +10,9 @@ namespace CSync.Lib;
 public class SyncedConfig<T> : SyncedInstance<T> where T : SyncedConfig<T> {
     static void LogErr(string str) => CSync.Logger.LogError(str);
 
+    [field:NonSerialized]
     public event EventHandler SyncComplete;
+
     string GUID;
 
     public void RequestSync(string modGuid) {
