@@ -34,6 +34,18 @@ public static class Extensions {
         return cfg.Bind(section, key, defaultVal, desc).ToSyncedEntry();
     }
 
+    public static SyncedEntry<V> BindSyncedEntry<V>(this ConfigFile cfg, 
+        string section, string key, V defaultVal, ConfigDescription desc
+    ) {
+        return cfg.BindSyncedEntry(section, key, defaultVal, desc.Description);
+    }
+
+    public static SyncedEntry<T> BindSyncedEntry<T>(this ConfigFile cfg,
+        ConfigDefinition definition, T defaultValue, ConfigDescription desc = null
+    ) {
+        return cfg.BindSyncedEntry(definition.Section, definition.Key, defaultValue, desc.Description);
+    }
+
     public static SyncedEntry<V> ToSyncedEntry<V>(this ConfigEntry<V> entry) {
         return new SyncedEntry<V>(entry);
     }

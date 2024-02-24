@@ -10,22 +10,26 @@ namespace CSync.Lib;
 public class SyncedConfig<T> : SyncedInstance<T> where T : SyncedConfig<T> {
     static void LogErr(string str) => CSync.Logger.LogError(str);
 
+    string GUID;
+
     [field:NonSerialized]
     public event EventHandler SyncComplete;
 
-    string GUID;
+    void OnSyncCompleted() {
+        SyncComplete?.Invoke(this, EventArgs.Empty);
+    }
 
     public void RequestSync(string modGuid) {
         if (!IsClient) return;
 
         using FastBufferWriter stream = new(IntSize, Allocator.Temp);
 
-        // Method `OnRequestSync` will then get called on host.
+        // Method `OnRequestSync` will then get called on the host.
         GUID = modGuid;
         stream.SendMessage($"{GUID}_OnRequestConfigSync");
     }
 
-    public static void OnRequestSync(ulong clientId, FastBufferReader _) {
+    public void OnRequestSync(ulong clientId, FastBufferReader _) {
         if (!IsHost) return;
 
         CSync.Logger.LogDebug($"Config sync request received from client: {clientId}");
@@ -39,13 +43,13 @@ public class SyncedConfig<T> : SyncedInstance<T> where T : SyncedConfig<T> {
             stream.WriteValueSafe(in value, default);
             stream.WriteBytesSafe(array);
 
-            stream.SendMessage($"{Instance.GUID}_OnReceiveConfigSync", clientId);
+            stream.SendMessage($"{GUID}_OnReceiveConfigSync", clientId);
         } catch(Exception e) {
             LogErr($"Error occurred syncing config with client: {clientId}\n{e}");
         }
     }
 
-    public static void OnReceiveSync(ulong _, FastBufferReader reader) {
+    public void OnReceiveSync(ulong _, FastBufferReader reader) {
         if (!reader.TryBeginRead(IntSize)) {
             LogErr("Config sync error: Could not begin reading buffer.");
             return;
@@ -62,13 +66,9 @@ public class SyncedConfig<T> : SyncedInstance<T> where T : SyncedConfig<T> {
 
         try {
             SyncInstance(data);
-            Instance.OnSyncCompleted();
+            OnSyncCompleted();
         } catch(Exception e) {
             LogErr($"Error syncing config instance!\n{e}");
         }
-    }
-
-    void OnSyncCompleted() {
-        SyncComplete?.Invoke(this, EventArgs.Empty);
     }
 }

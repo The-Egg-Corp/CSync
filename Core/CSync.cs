@@ -3,9 +3,11 @@ using BepInEx.Configuration;
 using BepInEx.Logging;
 
 using CSync.Core;
-
+using CSync.Lib;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 
 namespace CSync;
 
@@ -18,7 +20,9 @@ namespace CSync;
 [BepInPlugin(Metadata.GUID, Metadata.NAME, Metadata.VERSION)]
 public class CSync : BaseUnityPlugin {
     internal static new ManualLogSource Logger { get; private set; }
+
     internal static Dictionary<string, ConfigFile> FileCache = [];
+    internal static Dictionary<string, object> Instances = [];
 
     private void Awake() {
         Logger = base.Logger;
@@ -34,5 +38,13 @@ public class CSync : BaseUnityPlugin {
         }
 
         return cfg;
+    }
+
+    public static void Register(object config, string modGuid) {
+        Instances.Add(modGuid, config);
+    }
+
+    public static void Unregister(string modGuid) {
+        Instances.Remove(modGuid);
     }
 }
