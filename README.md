@@ -1,6 +1,12 @@
-# CSync <img align="right" width="128" height="128" src="https://media.discordapp.net/attachments/974491955864150046/1199740908879491162/CSync.png?ex=65c3a4ca&is=65b12fca&hm=1fd441d8eec89e22e16ab5963ec80244366a52aa0c12cdb01b069071bd1140d1&=&format=webp&quality=lossless&width=671&height=671">
+# CSync <img align="right" width="128" height="128" src="https://gcdn.thunderstore.io/live/repository/icons/Owen3H-CSync-1.0.8.png.128x128_q95.png">
 A BepInEx configuration file syncing library.<br>
 This library will help you force clients to have the same settings as the host!
+
+> [!IMPORTANT]
+> - This is **NOT** a standalone mod, it is intended for mod developers and does nothing on its own!<br>
+> - This does **NOT** edit or replace config files directly, everything is done in-memory.<br>
+> - It will **NOT** sync configs from mods that aren't dependent upon it.<br>
+> - CSync uses Unity's Named Messages to avoid **Netcode Patcher** and **NetworkBehaviour**.
 
 ## Features
 - Can serialize a `ConfigEntry` with a drop-in replacement. (`SyncedEntry`)
@@ -8,13 +14,8 @@ This library will help you force clients to have the same settings as the host!
 - Uses `DataContractSerializer`, a fast and safer alternative to `BinaryFormatter`.
 - Provides helpful extension methods.
 
-## Setup
-1. Download and extract BepInEx v5 into your game directory.
-2. Drop the `CSync.dll` into the `../BepInEx/plugins` folder.
-3. In your mod project, add an **Assembly Reference** to the aformentioned DLL.
-
-## Usage
-See the Thunderstore [wiki](https://thunderstore.io/c/lethal-company/p/Owen3H/CSync/wiki/) for a guide to using CSync.
+## Setup & Usage
+A guide to both setting up and using CSync is available on [Lethal Wiki](https://lethal.wiki/dev/apis/csync).
 
 ## License
 This project has the `CC BY-NC-SA 4.0` license.<br>
