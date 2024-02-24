@@ -2,6 +2,8 @@
 A BepInEx configuration file syncing library.<br>
 This library will help you force clients to have the same settings as the host!
 
+If you have a suggestion or bug, instead of nitpicking and calling me lazy, make a fucking issue!
+
 > [!IMPORTANT]
 > - This is **NOT** a standalone mod, it is intended for mod developers and does nothing on its own!<br>
 > - This does **NOT** edit or replace config files directly, everything is done in-memory.<br>
