@@ -52,11 +52,6 @@ public class CSync : BaseUnityPlugin {
         Instances.Remove(modGuid);
     }
 
-    internal static void SyncInstances() => Instances.Values.OfType<ISynchronizable>().Do(i => i.SetupSync());
-    internal static void RevertSyncedInstances() => Instances.Values.OfType<ISynchronizable>().Do(i => i.RevertSync());
-}
-
-internal interface ISynchronizable {
-    public void SetupSync();
-    public void RevertSync();
+    internal static void SyncInstances() => Instances.Values.OfType<SyncedConfig<object>>().Do(i => i.SetupSync());
+    internal static void RevertSyncedInstances() => Instances.Values.OfType<SyncedConfig<object>>().Do(i => i.RevertSync());
 }
