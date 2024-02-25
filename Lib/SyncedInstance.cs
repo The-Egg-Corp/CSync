@@ -26,12 +26,12 @@ public class SyncedInstance<T> : ByteSerializer<T> where T : class {
         Instance = instance;
     }
     
-    public static void SyncInstance(byte[] data) {
+    public void SyncInstance(byte[] data) {
         Instance = DeserializeFromBytes(data);
         Synced = Instance != null;
     }
 
-    public static void RevertSync() {
+    public void RevertSync() {
         Instance = Default;
         Synced = false;
     }

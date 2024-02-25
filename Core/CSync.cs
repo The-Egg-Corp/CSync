@@ -4,9 +4,10 @@ using BepInEx.Logging;
 
 using CSync.Core;
 using CSync.Lib;
-using System;
+using HarmonyLib;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace CSync;
 
@@ -39,11 +40,23 @@ public class CSync : BaseUnityPlugin {
         return cfg;
     }
 
-    public static void Register(object config, string modGuid) {
-        Instances.Add(modGuid, config);
+    public static void Register<T>(SyncedConfig<T> config) {
+        if (config == null) {
+            Logger.LogError($"An error occurred registering config: {config.GUID}\nConfig instance cannot be null!");
+        }
+
+        Instances.Add(config.GUID, config);
     }
 
     public static void Unregister(string modGuid) {
         Instances.Remove(modGuid);
     }
+
+    internal static void SyncInstances() => Instances.Values.OfType<ISynchronizable>().Do(i => i.SetupSync());
+    internal static void RevertSyncedInstances() => Instances.Values.OfType<ISynchronizable>().Do(i => i.RevertSync());
+}
+
+internal interface ISynchronizable {
+    public void SetupSync();
+    public void RevertSync();
 }

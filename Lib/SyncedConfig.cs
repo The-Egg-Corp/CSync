@@ -7,10 +7,10 @@ using CSync.Util;
 namespace CSync.Lib;
 
 [Serializable]
-public class SyncedConfig<T> : SyncedInstance<T> where T : SyncedConfig<T> {
+public class SyncedConfig<T>(string modGuid) : SyncedInstance<SyncedConfig<T>> {
     static void LogErr(string str) => CSync.Logger.LogError(str);
 
-    string GUID;
+    public readonly string GUID = modGuid;
 
     [field:NonSerialized]
     public event EventHandler SyncComplete;
@@ -19,13 +19,24 @@ public class SyncedConfig<T> : SyncedInstance<T> where T : SyncedConfig<T> {
         SyncComplete?.Invoke(this, EventArgs.Empty);
     }
 
-    public void RequestSync(string modGuid) {
+    public void SetupSync() {
+        if (IsHost) {
+            MessageManager.RegisterNamedMessageHandler($"{GUID}_OnRequestConfigSync", OnRequestSync);
+            Synced = true;
+            return;
+        }
+
+        Synced = false;
+        MessageManager.RegisterNamedMessageHandler($"{GUID}_OnReceiveConfigSync", OnReceiveSync);
+        RequestSync();
+    }
+
+    public void RequestSync() {
         if (!IsClient) return;
 
         using FastBufferWriter stream = new(IntSize, Allocator.Temp);
 
         // Method `OnRequestSync` will then get called on the host.
-        GUID = modGuid;
         stream.SendMessage($"{GUID}_OnRequestConfigSync");
     }
 
