@@ -7,20 +7,16 @@ using CSync.Util;
 namespace CSync.Lib;
 
 [Serializable]
-public class SyncedConfig<T> : SyncedInstance<T> where T : class {
+public class SyncedConfig<T>(string guid) : SyncedInstance<T> where T : class {
     static void LogErr(string str) => Plugin.Logger.LogError(str);
 
-    public readonly string GUID;
+    public readonly string GUID = guid;
 
     [field:NonSerialized]
     public event EventHandler SyncComplete;
 
     void OnSyncCompleted() {
         SyncComplete?.Invoke(this, EventArgs.Empty);
-    }
-
-    public SyncedConfig(string guid) {
-        GUID = guid;
     }
 
     public void SetupSync() {

@@ -2,8 +2,8 @@ using BepInEx.Configuration;
 using BepInEx;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using HarmonyLib;
+using System.Linq;
 
 namespace CSync.Lib;
 
@@ -15,7 +15,7 @@ namespace CSync.Lib;
 /// </summary>
 public class ConfigManager {
     internal static Dictionary<string, ConfigFile> FileCache = [];
-    internal static Dictionary<string, dynamic> Instances = [];
+    internal static Dictionary<string, object> Instances = [];
 
     internal static ConfigFile GetConfigFile(string fileName) {
         bool exists = FileCache.TryGetValue(fileName, out ConfigFile cfg);
