@@ -40,7 +40,7 @@ public class SyncedEntry<V> : ISerializable {
     SyncedEntry(SerializationInfo info, StreamingContext ctx) {
         // Reconstruct or get cached file
         string fileName = info.GetString("ConfigFileName");
-        ConfigFile cfg = CSync.GetConfigFile(fileName);
+        ConfigFile cfg = ConfigManager.GetConfigFile(fileName);
 
         // Reconstruct entry and reassign its value.
         Entry = cfg.Reconstruct<V>(info);

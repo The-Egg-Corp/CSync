@@ -1,3 +1,4 @@
+using CSync.Lib;
 using HarmonyLib;
 
 namespace CSync.Patches;
@@ -7,6 +8,6 @@ internal class LeavePatch {
     [HarmonyPostfix]
     [HarmonyPatch("StartDisconnect")]
     private static void RevertOnDisconnect() {
-        CSync.RevertSyncedInstances();
+        ConfigManager.RevertSyncedInstances();
     }
 }

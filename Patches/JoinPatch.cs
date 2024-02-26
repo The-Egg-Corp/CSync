@@ -1,3 +1,4 @@
+using CSync.Lib;
 using GameNetcodeStuff;
 using HarmonyLib;
 
@@ -8,6 +9,6 @@ internal class JoinPatch {
     [HarmonyPostfix]
     [HarmonyPatch("ConnectClientToPlayerObject")]
     private static void SyncOnJoin() {
-        CSync.SyncInstances();
+        ConfigManager.SyncInstances();
     }
 }

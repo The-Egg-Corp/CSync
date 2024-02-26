@@ -7,16 +7,20 @@ using CSync.Util;
 namespace CSync.Lib;
 
 [Serializable]
-public class SyncedConfig<T>(string modGuid) : SyncedInstance<SyncedConfig<T>> {
-    static void LogErr(string str) => CSync.Logger.LogError(str);
+public class SyncedConfig<T> : SyncedInstance<SyncedConfig<T>> {
+    static void LogErr(string str) => Plugin.Logger.LogError(str);
 
-    public readonly string GUID = modGuid;
+    public readonly string GUID;
 
     [field:NonSerialized]
     public event EventHandler SyncComplete;
 
     void OnSyncCompleted() {
         SyncComplete?.Invoke(this, EventArgs.Empty);
+    }
+
+    public SyncedConfig(string guid) {
+        GUID = guid;
     }
 
     public void SetupSync() {
@@ -43,7 +47,7 @@ public class SyncedConfig<T>(string modGuid) : SyncedInstance<SyncedConfig<T>> {
     public void OnRequestSync(ulong clientId, FastBufferReader _) {
         if (!IsHost) return;
 
-        CSync.Logger.LogDebug($"Config sync request received from client: {clientId}");
+        Plugin.Logger.LogDebug($"Config sync request received from client: {clientId}");
 
         byte[] array = SerializeToBytes(Instance);
         int value = array.Length;

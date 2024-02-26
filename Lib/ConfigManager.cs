@@ -1,32 +1,21 @@
-using BepInEx;
 using BepInEx.Configuration;
-using BepInEx.Logging;
-
-using CSync.Core;
-using CSync.Lib;
-using HarmonyLib;
+using BepInEx;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using HarmonyLib;
 
-namespace CSync;
+namespace CSync.Lib;
 
 /// <summary>
-/// The plugin and main entry point of this library.<br></br>
-/// Helps with internal logging and caching of config files through static references.<br></br>
+/// Helper class enabling the user to easily setup CSync.<br></br>
+/// Handles config registration, instance syncing and caching of BepInEx files.<br></br>
 /// <br></br>
-/// Do <b>NOT</b> use this class directly or create any instances of it!
+/// Reference this class in a static manner, do <b>NOT</b> create any instances of it!
 /// </summary>
-[BepInPlugin(Metadata.GUID, Metadata.NAME, Metadata.VERSION)]
-public class CSync : BaseUnityPlugin {
-    internal static new ManualLogSource Logger { get; private set; }
-
+public class ConfigManager {
     internal static Dictionary<string, ConfigFile> FileCache = [];
-    internal static Dictionary<string, object> Instances = [];
-
-    private void Awake() {
-        Logger = base.Logger;
-    }
+    internal static Dictionary<string, dynamic> Instances = [];
 
     internal static ConfigFile GetConfigFile(string fileName) {
         bool exists = FileCache.TryGetValue(fileName, out ConfigFile cfg);
@@ -41,11 +30,19 @@ public class CSync : BaseUnityPlugin {
     }
 
     public static void Register<T>(SyncedConfig<T> config) {
+        string guid = config.GUID;
+
         if (config == null) {
-            Logger.LogError($"An error occurred registering config: {config.GUID}\nConfig instance cannot be null!");
+            Plugin.Logger.LogError($"An error occurred registering config: {guid}\nConfig instance cannot be null!");
         }
 
-        Instances.Add(config.GUID, config);
+        if (Instances.ContainsKey(guid)) {
+            Plugin.Logger.LogWarning($"Attempted to register config `{guid}` after it has already been registered!");
+            return;
+        }
+
+        config.InitInstance(config);
+        Instances.Add(guid, config);
     }
 
     public static void Unregister(string modGuid) {

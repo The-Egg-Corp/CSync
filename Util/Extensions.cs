@@ -13,7 +13,7 @@ public static class Extensions {
         bool fragment = stream.Capacity > 1300;
         NetworkDelivery delivery = fragment ? NetworkDelivery.ReliableFragmentedSequenced : NetworkDelivery.Reliable;
 
-        if (fragment) CSync.Logger.LogDebug(
+        if (fragment) Plugin.Logger.LogDebug(
             $"Size of stream ({stream.Capacity}) was past the max buffer size.\n" +
             "Config instance will be sent in fragments to avoid overflowing the buffer."
         );
