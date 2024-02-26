@@ -29,7 +29,7 @@ public class ConfigManager {
         return cfg;
     }
 
-    public static void Register<T>(SyncedConfig<T> config) {
+    public static void Register<T>(T config) where T : SyncedConfig<T> {
         string guid = config.GUID;
 
         if (config == null) {
