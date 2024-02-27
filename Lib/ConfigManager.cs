@@ -13,7 +13,7 @@ namespace CSync.Lib;
 /// </summary>
 public class ConfigManager {
     internal static Dictionary<string, ConfigFile> FileCache = [];
-    internal static Dictionary<string, object> Instances = [];
+    internal static Dictionary<string, ISynchronizable> Instances = [];
 
     internal static ConfigFile GetConfigFile(string fileName) {
         bool exists = FileCache.TryGetValue(fileName, out ConfigFile cfg);
@@ -27,7 +27,7 @@ public class ConfigManager {
         return cfg;
     }
 
-    public static void Register<T>(T config) where T : SyncedConfig<T> {
+    public static void Register<T>(T config) where T : SyncedConfig<T>, ISynchronizable {
         string guid = config.GUID;
 
         if (config == null) {
@@ -47,6 +47,11 @@ public class ConfigManager {
         Instances.Remove(modGuid);
     }
 
-    internal static void SyncInstances() => Instances.Values.OfType<SyncedConfig<object>>().Do(i => i.SetupSync());
-    internal static void RevertSyncedInstances() => Instances.Values.OfType<SyncedConfig<object>>().Do(i => i.RevertSync());
+    internal static void SyncInstances() => Instances.Values.Do(i => i.SetupSync());
+    internal static void RevertSyncedInstances() => Instances.Values.Do(i => i.RevertSync());
+}
+
+public interface ISynchronizable {
+    public void SetupSync();
+    public void RevertSync();
 }
