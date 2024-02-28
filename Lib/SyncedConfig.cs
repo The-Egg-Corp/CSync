@@ -12,13 +12,6 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
 
     public readonly string GUID = guid;
 
-    [field:NonSerialized]
-    public event EventHandler SyncComplete;
-
-    void OnSyncCompleted() {
-        SyncComplete?.Invoke(this, EventArgs.Empty);
-    }
-
     public void SetupSync() {
         if (IsHost) {
             MessageManager.RegisterNamedMessageHandler($"{GUID}_OnRequestConfigSync", OnRequestSync);
@@ -77,7 +70,6 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
 
         try {
             SyncInstance(data);
-            OnSyncCompleted();
         } catch(Exception e) {
             LogErr($"Error syncing config instance!\n{e}");
         }
