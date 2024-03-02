@@ -41,7 +41,7 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
     internal void OnRequestSync(ulong clientId, FastBufferReader _) {
         if (!IsHost) return;
 
-        Plugin.Logger.LogDebug($"Config sync request received from client: {clientId}");
+        Plugin.Logger.LogDebug($"{GUID} - Config sync request received from client: {clientId}");
 
         byte[] array = SerializeToBytes(Instance);
         int value = array.Length;
@@ -54,19 +54,19 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
 
             stream.SendMessage(GUID, "OnReceiveConfigSync", clientId);
         } catch(Exception e) {
-            LogErr($"Error occurred syncing config with client: {clientId}\n{e}");
+            LogErr($"{GUID} - Error occurred syncing config with client: {clientId}\n{e}");
         }
     }
 
     internal void OnReceiveSync(ulong _, FastBufferReader reader) {
         if (!reader.TryBeginRead(IntSize)) {
-            LogErr("Config sync error: Could not begin reading buffer.");
+            LogErr($"{GUID} - Config sync error: Could not begin reading buffer.");
             return;
         }
 
         reader.ReadValueSafe(out int val, default);
         if (!reader.TryBeginRead(val)) {
-            LogErr("Config sync error: Host could not sync.");
+            LogErr($"{GUID} - Config sync error: Host could not sync.");
             return;
         }
 
