@@ -19,14 +19,8 @@ public class ByteSerializer<T> {
     public static byte[] SerializeToBytes(T val) {
         using MemoryStream stream = new();
 
-        try {
-            Serializer.WriteObject(stream, val);
-            return stream.ToArray();
-        }
-        catch (Exception e) {
-            Plugin.Logger.LogError($"Error serializing instance: {e}");
-            return null;
-        }
+        Serializer.WriteObject(stream, val);
+        return stream.ToArray();
     }
 
     public static T DeserializeFromBytes(byte[] data) {
@@ -34,8 +28,7 @@ public class ByteSerializer<T> {
 
         try {
             return (T) Serializer.ReadObject(stream);
-        } catch (Exception e) {
-            Plugin.Logger.LogError($"Error deserializing instance: {e}");
+        } catch (Exception) {
             return default;
         }
     }
