@@ -21,12 +21,10 @@ public class SyncedInstance<T> : ByteSerializer<T> where T : class {
 
     public static bool Synced;
 
-    [field:NonSerialized]
-    public event EventHandler SyncComplete;
+    [field:NonSerialized] public event EventHandler SyncComplete;
     void OnSyncCompleted() => SyncComplete?.Invoke(this, EventArgs.Empty);
 
-    [field:NonSerialized]
-    public event EventHandler SyncReverted;
+    [field:NonSerialized] public event EventHandler SyncReverted;
     void OnSyncReverted() => SyncReverted?.Invoke(this, EventArgs.Empty);
     
     public void InitInstance(T instance) {
@@ -36,7 +34,7 @@ public class SyncedInstance<T> : ByteSerializer<T> where T : class {
     
     public void SyncInstance(byte[] data) {
         Instance = DeserializeFromBytes(data);
-        Synced = Instance != null;
+        Synced = Instance != default;
 
         OnSyncCompleted();
     }

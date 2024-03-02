@@ -3,7 +3,6 @@ using BepInEx;
 using System.Collections.Generic;
 using System.IO;
 using HarmonyLib;
-using System.Linq;
 
 namespace CSync.Lib;
 
@@ -27,6 +26,10 @@ public class ConfigManager {
         return cfg;
     }
 
+    /// <summary>
+    /// Register a config with CSync, making it responsible for synchronization.<br></br>
+    /// After calling this method, all clients will receive the host's config upon joining.
+    /// </summary>
     public static void Register<T>(T config) where T : SyncedConfig<T>, ISynchronizable {
         string guid = config.GUID;
 
@@ -43,15 +46,11 @@ public class ConfigManager {
         Instances.Add(guid, config);
     }
 
-    public static void Unregister(string modGuid) {
-        Instances.Remove(modGuid);
-    }
-
     internal static void SyncInstances() => Instances.Values.Do(i => i.SetupSync());
     internal static void RevertSyncedInstances() => Instances.Values.Do(i => i.RevertSync());
 }
 
 public interface ISynchronizable {
-    public void SetupSync();
-    public void RevertSync();
+    void SetupSync();
+    void RevertSync();
 }

@@ -6,34 +6,39 @@ using CSync.Util;
 
 namespace CSync.Lib;
 
+/// <summary>
+/// Wrapper class allowing the config class (type parameter) to be synchronized.<br></br>
+/// Stores the mod's unique identifier and handles registering and sending of named messages.
+/// </summary>
 [Serializable]
 public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable where T : class {
     static void LogErr(string str) => Plugin.Logger.LogError(str);
 
+    /// <summary>
+    /// The mod name or abbreviation. After being given to the constructor, it cannot be changed.
+    /// </summary>
     public readonly string GUID = guid;
 
-    public void SetupSync() {
+    void ISynchronizable.SetupSync() {
         if (IsHost) {
             MessageManager.RegisterNamedMessageHandler($"{GUID}_OnRequestConfigSync", OnRequestSync);
-            Synced = true;
             return;
         }
 
-        Synced = false;
         MessageManager.RegisterNamedMessageHandler($"{GUID}_OnReceiveConfigSync", OnReceiveSync);
         RequestSync();
     }
 
-    public void RequestSync() {
+    void RequestSync() {
         if (!IsClient) return;
 
         using FastBufferWriter stream = new(IntSize, Allocator.Temp);
 
         // Method `OnRequestSync` will then get called on the host.
-        stream.SendMessage($"{GUID}_OnRequestConfigSync");
+        stream.SendMessage(GUID, "OnRequestConfigSync");
     }
 
-    public void OnRequestSync(ulong clientId, FastBufferReader _) {
+    internal void OnRequestSync(ulong clientId, FastBufferReader _) {
         if (!IsHost) return;
 
         Plugin.Logger.LogDebug($"Config sync request received from client: {clientId}");
@@ -47,13 +52,13 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
             stream.WriteValueSafe(in value, default);
             stream.WriteBytesSafe(array);
 
-            stream.SendMessage($"{GUID}_OnReceiveConfigSync", clientId);
+            stream.SendMessage(GUID, "OnReceiveConfigSync", clientId);
         } catch(Exception e) {
             LogErr($"Error occurred syncing config with client: {clientId}\n{e}");
         }
     }
 
-    public void OnReceiveSync(ulong _, FastBufferReader reader) {
+    internal void OnReceiveSync(ulong _, FastBufferReader reader) {
         if (!reader.TryBeginRead(IntSize)) {
             LogErr("Config sync error: Could not begin reading buffer.");
             return;
