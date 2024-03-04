@@ -31,7 +31,6 @@
 
     <ItemGroup>
         <None Include="$(ProjectDir)../README.md" Pack="true" PackagePath="/"/>
-        <None Include="$(ProjectDir)../CHANGELOG.md" Pack="true" PackagePath="/"/>
         <None Include="$(ProjectDir)../LICENSE" Pack="true" PackagePath="/"/>
     </ItemGroup>
 
@@ -45,7 +44,6 @@
 
     <ItemGroup>
         <ThunderstoreBuildCopyPath Include="$(ProjectDir)assets/bundles" Destination="BepInEx/plugins/$(ProjectName)/bundles"/>
-        <ThunderstoreBuildCopyPath Include="$(ProjectDir)../CHANGELOG.md" Destination="/"/>
         <ThunderstoreBuildCopyPath Include="$(ProjectDir)../LICENSE" Destination="/"/>
         <ThunderstorePublishCommunity Include="lethal-company" CategorySlugs="misc"/>
         <ThunderstoreDependency Include="BepInEx-BepInExPack" Version="5.4.2100" Reference="false" />
