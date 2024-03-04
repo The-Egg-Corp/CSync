@@ -1,0 +1,114 @@
+name: Build
+
+on:
+  # Trigger the workflow on pushes to only the 'main' branch (this avoids duplicate checks being run e.g., for dependabot pull requests)
+  push:
+    branches: [ main ]
+  # Trigger the workflow on any pull request
+  pull_request:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          filter: tree:0
+          submodules: recursive
+
+      - name: Setup .NET environment
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: "8.0.100"
+
+      - name: Restore project
+        run: |
+          dotnet restore
+          dotnet tool restore
+
+      - name: Build and pack solution
+        run: |
+          dotnet pack -c Release
+
+      - name: Upload thunderstore artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: thunderstore-build
+          path: |
+            ./*/assets/thunderstore.toml.user
+            ./*/bin/Release/netstandard2.1/dist/*.zip
+
+      - name: Upload nupkg artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nupkg-build
+          path: ./*/bin/Release/*.nupkg
+
+  upload-release-artifacts:
+    name: Upload Release Artifacts
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Upload artifacts to Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload ${{ github.event.release.tag_name }} thunderstore-build/*/bin/Release/netstandard2.1/dist/*.zip nupkg-build/*/bin/Release/*.nupkg
+
+  deploy-nuget:
+    name: Deploy to NuGet
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v4
+
+      - name: Download nupkg artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: nupkg-build
+
+      - name: Setup .NET environment
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: "8.0.100"
+
+      - name: Publish to NuGet.org
+        run: |
+          dotnet nuget push ./*/bin/Release/*.nupkg --api-key ${{ secrets.NUGET_API_TOKEN }} --source https://api.nuget.org/v3/index.json
+
+  deploy-thunderstore:
+    name: Deploy to Thunderstore
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v4
+
+      - name: Download Thunderstore artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: thunderstore-build
+
+      - name: Setup .NET environment
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: "8.0.100"
+
+      - name: Restore dotnet tools
+        run: |
+          dotnet tool restore
+
+      - name: Publish to Thunderstore
+        env:
+          TCLI_AUTH_TOKEN: ${{ secrets.THUNDERSTORE_API_TOKEN }}
+        run: |
+          dotnet build -c Release -target:ThunderstorePublish
