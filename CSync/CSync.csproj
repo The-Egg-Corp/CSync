@@ -37,7 +37,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Content Include="$(ProjectDir)assets/icon/icon.png" Pack="true" PackagePath="/"/>
+        <Content Include="$(ProjectDir)assets/icons/icon.png" Pack="true" PackagePath="/"/>
         <Content Include="$(ProjectDir)../README.md" Pack="true" PackagePath="/"/>
     </ItemGroup>
     
