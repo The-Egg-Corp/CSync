@@ -1,91 +1,73 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;net472;net48</TargetFrameworks>
-    <AssemblyName>CSync</AssemblyName>
-    <Description>Configuration file syncing library for BepInEx.</Description>
-    <Version>2.1.0</Version>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <LangVersion>latest</LangVersion>
-    <RestoreAdditionalProjectSources>
-      https://api.nuget.org/v3/index.json;
-      https://nuget.bepinex.dev/v3/index.json;
-      https://nuget.samboy.dev/v3/index.json
-    </RestoreAdditionalProjectSources>
-    <RootNamespace>CSync</RootNamespace>
-    <Title>$(AssemblyName)</Title>
-    <NeutralLanguage>en-GB</NeutralLanguage>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFrameworks>netstandard2.1;net472;net48</TargetFrameworks>
+        <AssemblyName>com.sigurd.csync</AssemblyName>
+        <Description>Configuration file syncing library for BepInEx.</Description>
+        <RestoreAdditionalProjectSources>
+            https://api.nuget.org/v3/index.json;
+            https://nuget.bepinex.dev/v3/index.json;
+            https://nuget.samboy.dev/v3/index.json
+        </RestoreAdditionalProjectSources>
+        <RootNamespace>CSync</RootNamespace>
+        <Title>$(AssemblyName)</Title>
+        <NeutralLanguage>en-GB</NeutralLanguage>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <IsPackable>true</IsPackable>
+        <PackageId>Sigurd.BepInEx.CSync</PackageId>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <Description>Configuration file syncing library for BepInEx.
+            Allows serialization of a ConfigEntry with a drop in replacement.
+
+            A usage guide can be found on the Thunderstore wiki.
+            https://thunderstore.io/c/lethal-company/p/Sigurd/CSync/wiki/
+        </Description>
+        <PackageTags>config bepinex sync library lethalcompany</PackageTags>
+        <PackageIcon>icon.png</PackageIcon>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <IsThunderstorePackable>true</IsThunderstorePackable>
+        <ThunderstoreName>CSync</ThunderstoreName>
+        <ThunderstoreDescription>Configuration file syncing library for BepInEx.</ThunderstoreDescription>
+        <ThunderstoreIconPath>$(ProjectDir)assets/icons/icon.png</ThunderstoreIconPath>
+        <HasBepInPlugin>true</HasBepInPlugin>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Content Include="$(ProjectDir)assets/icon/icon.png" Pack="true" PackagePath="/"/>
+        <Content Include="$(ProjectDir)../README.md" Pack="true" PackagePath="/"/>
+    </ItemGroup>
     
-  <PropertyGroup>
-    <PackageId>Owen3H.BepInEx.CSync</PackageId>
-    <Authors>Owen3H</Authors>
-    <PackageProjectUrl>https://thunderstore.io/c/lethal-company/p/Owen3H/CSync</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/Owen3H/CSync.git</RepositoryUrl>
-    <PackageReadmeFile>nuget.README.md</PackageReadmeFile>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <Description>Configuration file syncing library for BepInEx.
-    Allows serialization of a ConfigEntry with a drop in replacement.
-      
-    A usage guide can be found on the Thunderstore wiki.
-    https://thunderstore.io/c/lethal-company/p/Owen3H/CSync/wiki/
-    </Description>
-    <PackageTags>config bepinex sync library lethalcompany</PackageTags>
-    <PackageIcon>icon.png</PackageIcon>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-  </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all"/>
+        <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" PrivateAssets="all"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="BepInEx.Core" Version="5.*"/>
+        <PackageReference Include="UnityEngine.Modules" Version="2022.3.9" IncludeAssets="compile"/>
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
+        <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all"/>
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(CI)' != 'true'">
+        <Reference Include="Assembly-CSharp">
+            <HintPath>$(LethalCompanyDir)Lethal Company_Data\Managed\Assembly-CSharp.dll</HintPath>
+        </Reference>
+        <Reference Include="Unity.Collections">
+            <HintPath>$(LethalCompanyDir)Lethal Company_Data\Managed\Unity.Collections.dll</HintPath>
+        </Reference>
+        <Reference Include="Unity.Netcode.Runtime">
+            <HintPath>$(LethalCompanyDir)Lethal Company_Data\Managed\Unity.Netcode.Runtime.dll</HintPath>
+        </Reference>
+    </ItemGroup>
     
-  <ItemGroup>
-	<Content Include="icon.png" Pack="true" PackagePath="" />
-	<Content Include="nuget.README.md" Pack="true" PackagePath="" />
-  </ItemGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;1591</NoWarn>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <NoWarn>1701;1702;1591</NoWarn>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
-    <PackageReference Include="BepInEx.Core" Version="5.*" />
-    <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
-    <PackageReference Include="UnityEngine.Modules" Version="2022.3.9" IncludeAssets="compile" />
-  </ItemGroup>
-  
-  <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Reference Include="Assembly-CSharp">
-      <HintPath>E:\SteamLibrary\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Assembly-CSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Collections">
-      <HintPath>E:\SteamLibrary\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Unity.Collections.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Netcode.Runtime">
-      <HintPath>E:\SteamLibrary\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Unity.Netcode.Runtime.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <None Update="LICENSE">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-    <None Update="nuget.README.md">
-      <PackagePath>\</PackagePath>
-      <Pack>True</Pack>
-    </None>
-    <None Update="README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
-  
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="echo &quot;.&quot; &gt; &quot;E:\SteamLibrary\steamapps\common\Lethal Company\BepInEx\plugins\$(TargetName).dll&quot; &amp;&amp; xcopy /q /y /i &quot;$(TargetPath)&quot; &quot;E:\SteamLibrary\steamapps\common\Lethal Company\BepInEx\plugins\$(TargetName).dll&quot;" />
-  </Target>
+    <ItemGroup Condition="'$(CI)' == 'true'">
+        <PackageReference Include="LethalCompany.GameLibs.Steam" Version="49.0.0-alpha.1" />
+    </ItemGroup>
 </Project>

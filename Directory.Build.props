@@ -19,12 +19,12 @@
 
     <!-- NuGet metadata -->
     <PropertyGroup>
-        <Authors>Lordfirespeed</Authors>
+        <Authors>Owen3H;Lordfirespeed</Authors>
         <Company>Sigurd Team</Company>
         <IsPackable>false</IsPackable>
         <PackageLicenseExpression>CC-BY-NC-SA-4.0</PackageLicenseExpression>
         <RepositoryUrl>https://github.com/lc-sigurd/CSync</RepositoryUrl>
-        <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
+        <PackageProjectUrl>https://thunderstore.io/c/lethal-company/p/Sigurd/CSync</PackageProjectUrl>
         <RepositoryType>git</RepositoryType>
         <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
@@ -32,6 +32,7 @@
     <ItemGroup>
         <None Include="$(ProjectDir)../README.md" Pack="true" PackagePath="/"/>
         <None Include="$(ProjectDir)../CHANGELOG.md" Pack="true" PackagePath="/"/>
+        <None Include="$(ProjectDir)../LICENSE" Pack="true" PackagePath="/"/>
     </ItemGroup>
 
     <!-- Thunderstore metadata -->
