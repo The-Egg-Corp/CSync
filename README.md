@@ -1,3 +1,6 @@
+I WILL NO LONGER AFFILIATE WITH THUNDERSTORE OR THE LETHAL MODDING DISCORD.
+PLEASE SEE [RELEASES](https://github.com/Owen3H/CSync/releases)
+
 # CSync <img align="right" width="128" height="128" src="https://gcdn.thunderstore.io/live/repository/icons/Owen3H-CSync-1.0.8.png.128x128_q95.png">
 A BepInEx configuration file syncing library.<br>
 This library will help you force clients to have the same settings as the host!
