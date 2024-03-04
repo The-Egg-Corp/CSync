@@ -3,7 +3,7 @@
     <TargetFrameworks>netstandard2.1;net472;net48</TargetFrameworks>
     <AssemblyName>CSync</AssemblyName>
     <Description>Configuration file syncing library for BepInEx.</Description>
-    <Version>2.1.0</Version>
+    <Version>2.2.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <RestoreAdditionalProjectSources>
@@ -61,6 +61,9 @@
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
       <HintPath>E:\SteamLibrary\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="LethalConfig">
+      <HintPath>E:\SteamLibrary\steamapps\common\Lethal Company\BepInEx\plugins\LethalConfig\LethalConfig.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Collections">
       <HintPath>E:\SteamLibrary\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Unity.Collections.dll</HintPath>
