@@ -1,4 +1,4 @@
-# CSync <img align="right" width="128" height="128" src="https://github.com/lc-sigurd/CSync/raw/main/CSync/assets/icons/icon.png">
+# CSync [<img align="right" width="128" height="128" src="https://github.com/lc-sigurd/CSync/raw/main/CSync/assets/icons/icon.png">](https://thunderstore.io/c/lethal-company/p/Sigurd/CSync/)
 
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/lc-sigurd/CSync/build.yml?style=for-the-badge&logo=github)](https://github.com/lc-sigurd/CSync/actions/workflows/build.yml)
 [![Release Version](https://img.shields.io/github/v/release/lc-sigurd/CSync?style=for-the-badge&logo=github)](https://github.com/lc-sigurd/CSync/releases)
