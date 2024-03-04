@@ -22,7 +22,6 @@
         <Authors>Owen3H;Lordfirespeed</Authors>
         <Company>Sigurd Team</Company>
         <IsPackable>false</IsPackable>
-        <PackageLicenseExpression>CC-BY-NC-SA-4.0</PackageLicenseExpression>
         <RepositoryUrl>https://github.com/lc-sigurd/CSync</RepositoryUrl>
         <PackageProjectUrl>https://thunderstore.io/c/lethal-company/p/Sigurd/CSync</PackageProjectUrl>
         <RepositoryType>git</RepositoryType>
