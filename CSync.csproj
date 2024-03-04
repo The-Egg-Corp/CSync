@@ -62,9 +62,6 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>E:\SteamLibrary\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="LethalConfig">
-      <HintPath>E:\SteamLibrary\steamapps\common\Lethal Company\BepInEx\plugins\LethalConfig\LethalConfig.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Collections">
       <HintPath>E:\SteamLibrary\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Unity.Collections.dll</HintPath>
     </Reference>
