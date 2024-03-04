@@ -13,6 +13,7 @@ namespace CSync.Lib;
 [Serializable]
 public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable where T : class {
     static void LogErr(string str) => Plugin.Logger.LogError(str);
+    static void LogDebug(string str) => Plugin.Logger.LogDebug(str);
 
     /// <summary>
     /// The mod name or abbreviation. After being given to the constructor, it cannot be changed.
@@ -57,12 +58,11 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
             using FastBufferWriter s = new(IntSize, Allocator.Temp);
             s.SendMessage(GUID, "OnHostDisabledSyncing", clientId);
 
-            Plugin.Logger.LogDebug($"{GUID} - The host (you) has disabled syncing, sending clients a message!");
-
+            LogDebug($"{GUID} - The host (you) has disabled syncing, sending clients a message!");
             return;
         }
 
-        Plugin.Logger.LogDebug($"{GUID} - Config sync request received from client: {clientId}");
+        LogDebug($"{GUID} - Config sync request received from client: {clientId}");
 
         byte[] array = SerializeToBytes(Instance);
         int value = array.Length;
@@ -103,6 +103,6 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
 
     internal void OnHostDisabledSyncing(ulong _, FastBufferReader reader) {
         OnSyncCompleted();
-        Plugin.Logger.LogDebug($"{GUID} - Host disabled syncing. The SyncComplete event will still be invoked.");
+        LogDebug($"{GUID} - Host disabled syncing. The SyncComplete event will still be invoked.");
     }
 }
