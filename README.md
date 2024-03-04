@@ -1,4 +1,4 @@
-# CSync <img align="right" width="128" height="128" src="https://gcdn.thunderstore.io/live/repository/icons/Owen3H-CSync-1.0.8.png.128x128_q95.png">
+# CSync <img align="right" width="128" height="128" src="https://github.com/lc-sigurd/CSync/raw/CSync/assets/icons/icon.png">
 A BepInEx configuration file syncing library.<br>
 This library will help you force clients to have the same settings as the host!
 
