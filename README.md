@@ -4,7 +4,6 @@
 
 # CSync <img align="right" width="128" height="128" src="https://gcdn.thunderstore.io/live/repository/icons/Owen3H-CSync-1.0.8.png.128x128_q95.png">
 A BepInEx configuration file syncing library.<br>
-This library will help you force clients to have the same settings as the host!
 
 > [!IMPORTANT]
 > - This is **NOT** a standalone mod, it is intended for mod developers and does nothing on its own!<br>
@@ -19,7 +18,7 @@ This library will help you force clients to have the same settings as the host!
 - Provides helpful extension methods.
 
 ## Setup & Usage
-A guide to both setting up and using CSync is available on [Lethal Wiki](https://lethal.wiki/dev/apis/csync).
+A guide to both setting up and using CSync is available on the [Wiki](https://github.com/Owen3H/CSync/wiki).
 
 ## License
 This project has the `CC BY-NC-SA 4.0` license.<br>
