@@ -19,12 +19,23 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
     /// </summary>
     public readonly string GUID = guid;
 
+    internal SyncedEntry<bool> SYNC_TO_CLIENTS { get; private set; } = null;
+
+    protected void EnableHostSyncControl(SyncedEntry<bool> hostSyncControlOption) {
+        SYNC_TO_CLIENTS = hostSyncControlOption;
+
+        hostSyncControlOption.SettingChanged += (object sender, EventArgs e) => {
+            SYNC_TO_CLIENTS = hostSyncControlOption;
+        };
+    }
+
     void ISynchronizable.SetupSync() {
         if (IsHost) {
             MessageManager.RegisterNamedMessageHandler($"{GUID}_OnRequestConfigSync", OnRequestSync);
             return;
         }
 
+        MessageManager.RegisterNamedMessageHandler($"{GUID}_OnHostDisabledSyncing", OnHostDisabledSyncing);
         MessageManager.RegisterNamedMessageHandler($"{GUID}_OnReceiveConfigSync", OnReceiveSync);
         RequestSync();
     }
@@ -39,7 +50,17 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
     }
 
     internal void OnRequestSync(ulong clientId, FastBufferReader _) {
+        // Only run if we are host/server.
         if (!IsHost) return;
+
+        if (SYNC_TO_CLIENTS != null && SYNC_TO_CLIENTS == false) {
+            using FastBufferWriter s = new(IntSize, Allocator.Temp);
+            s.SendMessage(GUID, "OnHostDisabledSyncing", clientId);
+
+            Plugin.Logger.LogDebug($"{GUID} - The host (you) has disabled syncing, sending clients a message!");
+
+            return;
+        }
 
         Plugin.Logger.LogDebug($"{GUID} - Config sync request received from client: {clientId}");
 
@@ -78,5 +99,10 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
         } catch(Exception e) {
             LogErr($"Error syncing config instance!\n{e}");
         }
+    }
+
+    internal void OnHostDisabledSyncing(ulong _, FastBufferReader reader) {
+        OnSyncCompleted();
+        Plugin.Logger.LogDebug($"{GUID} - Host disabled syncing. The SyncComplete event will still be invoked.");
     }
 }

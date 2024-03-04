@@ -32,13 +32,13 @@ public class SyncedInstance<T> : ByteSerializer<T> where T : class {
     /// Invoked when deserialization of data has finished and <see cref="Instance"/> is assigned to.
     /// </summary>
     [field:NonSerialized] public event EventHandler SyncComplete;
-    void OnSyncCompleted() => SyncComplete?.Invoke(this, EventArgs.Empty);
+    internal void OnSyncCompleted() => SyncComplete?.Invoke(this, EventArgs.Empty);
 
     /// <summary>
     /// Invoked when <see cref="Instance"/> is set back to <see cref="Default"/> and no longer synced.
     /// </summary>
     [field:NonSerialized] public event EventHandler SyncReverted;
-    void OnSyncReverted() => SyncReverted?.Invoke(this, EventArgs.Empty);
+    internal void OnSyncReverted() => SyncReverted?.Invoke(this, EventArgs.Empty);
     
     public static bool Synced;
 
