@@ -16,6 +16,18 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
     static void LogDebug(string str) => Plugin.Logger.LogDebug(str);
 
     /// <summary>
+    /// Invoked on the host when a client requests to sync.
+    /// </summary>
+    [field:NonSerialized] public event EventHandler SyncRequested;
+    internal void OnSyncRequested() => SyncRequested?.Invoke(this, EventArgs.Empty);
+
+    /// <summary>
+    /// Invoked on the client when they receive the host config.
+    /// </summary>
+    [field:NonSerialized] public event EventHandler SyncReceived;
+    internal void OnSyncReceived() => SyncReceived?.Invoke(this, EventArgs.Empty);
+
+    /// <summary>
     /// The mod name or abbreviation. After being given to the constructor, it cannot be changed.
     /// </summary>
     public readonly string GUID = guid;
@@ -51,8 +63,8 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
     }
 
     internal void OnRequestSync(ulong clientId, FastBufferReader _) {
-        // Only run if we are host/server.
         if (!IsHost) return;
+        OnSyncRequested();
 
         if (SYNC_TO_CLIENTS != null && SYNC_TO_CLIENTS == false) {
             using FastBufferWriter s = new(IntSize, Allocator.Temp);
@@ -80,6 +92,8 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
     }
 
     internal void OnReceiveSync(ulong _, FastBufferReader reader) {
+        OnSyncReceived();
+
         if (!reader.TryBeginRead(IntSize)) {
             LogErr($"{GUID} - Config sync error: Could not begin reading buffer.");
             return;
