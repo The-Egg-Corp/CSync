@@ -14,6 +14,11 @@ This library will help you force clients to have the same settings as the host!
 > - It will **NOT** sync configs from mods that aren't dependent upon it.<br>
 > - CSync uses Unity's Named Messages to avoid **Netcode Patcher** and **NetworkBehaviour**.
 
+## Disclaimer
+
+This project is a **fork** of the [original CSync project](https://github.com/Owen3H/CSync) authored by
+[@Owen3H](https://github.com/Owen3H).
+
 ## Features
 - Can serialize a `ConfigEntry` with a drop-in replacement. (`SyncedEntry`)
 - No seperate config file system, retains BepInEx support.
