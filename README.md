@@ -5,7 +5,7 @@
 [![Thunderstore Version](https://img.shields.io/thunderstore/v/Sigurd/CSync?style=for-the-badge&logo=thunderstore&logoColor=white)](https://thunderstore.io/c/lethal-company/p/Sigurd/CSync/)
 [![Thunderstore Downloads](https://img.shields.io/thunderstore/dt/Sigurd/CSync?style=for-the-badge&logo=thunderstore&logoColor=white)](https://thunderstore.io/c/lethal-company/p/Sigurd/CSync/)
 
-A BepInEx configuration file syncing library.<br>
+A BepInEx configuration file syncing library.
 This library will help you force clients to have the same settings as the host!
 
 > [!IMPORTANT]
