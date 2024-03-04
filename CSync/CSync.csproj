@@ -50,10 +50,6 @@
         <PackageReference Include="UnityEngine.Modules" Version="2022.3.9" IncludeAssets="compile"/>
     </ItemGroup>
 
-    <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
-        <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all"/>
-    </ItemGroup>
-
     <ItemGroup Condition="'$(CI)' != 'true'">
         <Reference Include="Assembly-CSharp">
             <HintPath>$(LethalCompanyDir)Lethal Company_Data\Managed\Assembly-CSharp.dll</HintPath>
