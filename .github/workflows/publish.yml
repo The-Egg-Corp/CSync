@@ -59,7 +59,7 @@ jobs:
       - name: Upload artifacts to Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload ${{ github.event.release.tag_name }} thunderstore-build/*/dist/*.zip nupkg-build/*/bin/Release/*.nupkg
+        run: gh release upload ${{ github.event.release.tag_name }} thunderstore-build/*/bin/Release/netstandard2.1/dist/*.zip nupkg-build/*/bin/Release/*.nupkg
 
   deploy-nuget:
     name: Deploy to NuGet
@@ -109,4 +109,4 @@ jobs:
         env:
           TCLI_AUTH_TOKEN: ${{ secrets.THUNDERSTORE_API_TOKEN }}
         run: |
-          dotnet build -target:ThunderstorePublish
+          dotnet build -c Release -target:ThunderstorePublis
