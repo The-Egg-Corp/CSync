@@ -3,7 +3,10 @@
 > FURTHER UPDATES WILL ONLY BE HERE -> [RELEASES](https://github.com/Owen3H/CSync/releases)**
 
 # CSync <img align="right" width="128" height="128" src="https://gcdn.thunderstore.io/live/repository/icons/Owen3H-CSync-1.0.8.png.128x128_q95.png">
-A BepInEx configuration file syncing library.<br>
+An easy-to-implement configuration file syncing library.<br>
+**CSync** is game-independent should work for any **BepInEx** supported game!
+
+The [Wiki](https://github.com/Owen3H/CSync/wiki) should cover all you need to setup and use the library.
 
 > [!IMPORTANT]
 > - This is **NOT** a standalone mod, it is intended for mod developers and does nothing on its own!<br>
@@ -16,9 +19,6 @@ A BepInEx configuration file syncing library.<br>
 - No seperate config file system, retains BepInEx support.
 - Uses `DataContractSerializer`, a fast and safer alternative to `BinaryFormatter`.
 - Provides helpful extension methods.
-
-## Setup & Usage
-A guide to both setting up and using CSync is available on the [Wiki](https://github.com/Owen3H/CSync/wiki).
 
 ## License
 This project has the `CC BY-NC-SA 4.0` license.<br>
