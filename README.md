@@ -6,7 +6,7 @@
 An easy-to-implement configuration file syncing library.<br>
 **CSync** is game-independent should work for any **BepInEx** supported game!
 
-The [Wiki](https://github.com/Owen3H/CSync/wiki) should cover all you need to setup and use the library.
+The [wiki](https://github.com/Owen3H/CSync/wiki) should cover all you need to start using this library.
 
 > [!IMPORTANT]
 > - This is **NOT** a standalone mod, it is intended for mod developers and does nothing on its own!<br>
