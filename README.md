@@ -1,6 +1,8 @@
 > [!WARNING]
-> **I WILL NO LONGER AFFILIATE WITH THUNDERSTORE OR THE LETHAL MODDING DISCORD.<br>
-> FURTHER UPDATES WILL ONLY BE HERE -> [RELEASES](https://github.com/Owen3H/CSync/releases)**
+> **I will no longer affiliate with Thunderstore or the Lethal Modding Discord.<br>
+> Further updates will only be [here](https://github.com/Owen3H/CSync/releases). I will not support any forks.**
+> 
+> **You are free to join my [discord]() if you would like to chat.**
 
 # CSync <img align="right" width="128" height="128" src="https://gcdn.thunderstore.io/live/repository/icons/Owen3H-CSync-1.0.8.png.128x128_q95.png">
 An easy-to-implement configuration file syncing library.<br>
