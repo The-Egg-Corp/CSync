@@ -12,7 +12,7 @@ namespace CSync;
 /// <br></br>
 /// Do <b>NOT</b> use this class directly or create any instances of it!
 /// </summary>
-[BepInPlugin(GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
+[BepInPlugin(GUID, NAME, VERSION)]
 public class Plugin : BaseUnityPlugin {
     internal static new ManualLogSource Logger { get; private set; }
     
