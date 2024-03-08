@@ -1,7 +1,6 @@
 using BepInEx;
 using BepInEx.Logging;
 
-using CSync.Core;
 using HarmonyLib;
 using System;
 
@@ -13,17 +12,21 @@ namespace CSync;
 /// <br></br>
 /// Do <b>NOT</b> use this class directly or create any instances of it!
 /// </summary>
-[BepInPlugin(Metadata.GUID, Metadata.NAME, Metadata.VERSION)]
+[BepInPlugin(GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
 public class Plugin : BaseUnityPlugin {
     internal static new ManualLogSource Logger { get; private set; }
     
+    const string GUID = MyPluginInfo.PLUGIN_GUID;
+    const string NAME = MyPluginInfo.PLUGIN_NAME;
+    const string VERSION = MyPluginInfo.PLUGIN_VERSION;
+
     Harmony Patcher;
 
     private void Awake() {
         Logger = base.Logger;
 
         try {
-            Patcher = new(Metadata.GUID);
+            Patcher = new(GUID);
             Patcher.PatchAll();
 
             Logger.LogInfo("CSync successfully applied patches.");
