@@ -14,7 +14,7 @@ The [wiki](https://github.com/Owen3H/CSync/wiki) should cover all you need to st
 > - This is **NOT** a standalone mod, it is intended for mod developers and does nothing on its own!<br>
 > - This does **NOT** edit or replace config files directly, everything is done in-memory.<br>
 > - It will **NOT** sync configs from mods that aren't dependent upon it.<br>
-> - CSync uses Unity's Named Messages to avoid **Netcode Patcher** and **NetworkBehaviour**.
+> - CSync uses Unity's [Named Messages](https://docs-multiplayer.unity3d.com/netcode/current/advanced-topics/message-system/custom-messages/#name-message-example) to avoid **Netcode Patcher** and **NetworkBehaviour**.
 
 ## Features
 - Can serialize a `ConfigEntry` with a drop-in replacement. (`SyncedEntry`)
