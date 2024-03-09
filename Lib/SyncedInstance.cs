@@ -40,8 +40,14 @@ public class SyncedInstance<T> : ByteSerializer<T> where T : class {
     [field:NonSerialized] public event EventHandler SyncReverted;
     internal void OnSyncReverted() => SyncReverted?.Invoke(this, EventArgs.Empty);
     
+    /// <summary>
+    /// Whether this instance has been synchronized.
+    /// </summary>
     public static bool Synced;
 
+    /// <summary>
+    /// Assigns both the default and current instances to the inputted instance.
+    /// </summary>
     public void InitInstance(T instance) {
         Default = instance;
         Instance = instance;

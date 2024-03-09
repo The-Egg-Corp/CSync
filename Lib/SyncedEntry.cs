@@ -20,6 +20,9 @@ public class SyncedEntry<V> : ISerializable {
     public string Description => Entry.Description.Description;
     public object DefaultValue => Entry.DefaultValue;
 
+    /// <summary>
+    /// The value associated with this entry. Can be omitted in some cases.
+    /// </summary>
     public V Value {
         get => Entry.Value;
         set => Entry.Value = value;
@@ -27,6 +30,9 @@ public class SyncedEntry<V> : ISerializable {
 
     public static implicit operator V(SyncedEntry<V> e) => e.Value;
 
+    /// <summary>
+    /// Invoked whenever <see cref="Value"/> changes.
+    /// </summary>
     public event EventHandler SettingChanged {
         add => Entry.SettingChanged += value;
         remove => Entry.SettingChanged -= value;
