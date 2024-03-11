@@ -26,8 +26,8 @@
     <Description>Configuration file syncing library for BepInEx.
     Allows serialization of a ConfigEntry with a drop in replacement.
       
-    A usage guide can be found on the Thunderstore wiki.
-    https://thunderstore.io/c/lethal-company/p/Owen3H/CSync/wiki/
+    The wiki/usage guide can be found on GitHub.
+    https://github.com/Owen3H/CSync/wiki
     </Description>
     <PackageTags>config bepinex sync library lethalcompany</PackageTags>
     <PackageIcon>icon.png</PackageIcon>
