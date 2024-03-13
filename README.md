@@ -1,12 +1,9 @@
-> [!WARNING]
-> **I will no longer affiliate with the Lethal Modding Discord.**<br>
-> **Feel free to join my [discord](https://discord.gg/CMyTmUMP2P) if you would like to chat.**
-
 # CSync <img align="right" width="128" height="128" src="https://gcdn.thunderstore.io/live/repository/icons/Owen3H-CSync-1.0.8.png.128x128_q95.png">
 An easy-to-implement configuration file syncing library.<br>
 **CSync** is game-independent and should work for any **BepInEx** supported game!
 
-The [wiki](https://github.com/Owen3H/CSync/wiki) should cover all you need to start using this library.
+The [wiki](https://github.com/Owen3H/CSync/wiki) should cover all you need to start using this library.\
+Feel free to join my [discord](https://discord.gg/CMyTmUMP2P) for questions and support.
 
 > [!IMPORTANT]
 > - This is **NOT** a standalone mod, it is intended for mod developers and does nothing on its own!<br>
