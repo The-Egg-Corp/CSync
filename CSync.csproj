@@ -3,7 +3,7 @@
     <TargetFrameworks>netstandard2.1;net472;net48</TargetFrameworks>
     <AssemblyName>CSync</AssemblyName>
     <Description>Configuration file syncing library for BepInEx.</Description>
-    <Version>2.2.2</Version>
+    <Version>2.2.3</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <RestoreAdditionalProjectSources>
@@ -35,8 +35,8 @@
   </PropertyGroup>
     
   <ItemGroup>
-	<Content Include="icon.png" Pack="true" PackagePath="" />
-	<Content Include="nuget.README.md" Pack="true" PackagePath="" />
+    <Content Include="icon.png" Pack="true" PackagePath="" />
+    <Content Include="nuget.README.md" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
