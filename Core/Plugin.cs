@@ -14,7 +14,7 @@ namespace CSync;
 public class Plugin : BaseUnityPlugin {
     internal static new ManualLogSource Logger { get; private set; }
     
-    const string GUID = MyPluginInfo.PLUGIN_GUID;
+    const string GUID = $"io.github.{MyPluginInfo.PLUGIN_NAME}";
     const string NAME = MyPluginInfo.PLUGIN_NAME;
     const string VERSION = MyPluginInfo.PLUGIN_VERSION;
 

@@ -3,7 +3,7 @@
     <TargetFrameworks>netstandard2.1;net472;net48</TargetFrameworks>
     <AssemblyName>CSync</AssemblyName>
     <Description>Configuration file syncing library for BepInEx.</Description>
-    <Version>2.2.3</Version>
+    <Version>2.2.4</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <RestoreAdditionalProjectSources>
