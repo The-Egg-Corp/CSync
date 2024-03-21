@@ -31,7 +31,6 @@ public class Plugin : BaseUnityPlugin {
             return;
         }
 
-            Patcher = new(GUID);
         var game = AppDomain.CurrentDomain.FriendlyName.Replace(".exe", "");
         if (game == "Lethal Company" || game == "LethalCompany") {
             Logger.LogInfo("Applying Lethal Company patches.");
