@@ -1,8 +1,7 @@
 # CSync <img align="right" width="128" height="128" src="https://media.discordapp.net/attachments/1215227926354731029/1217977613176410242/CSyncV69.png?ex=6605fd0b&is=65f3880b&hm=e037a52acf909f9b1605fcaaa67bdb16a41ba194ad04c2cddd675f588d56a4a9&=&format=webp&quality=lossless&width=408&height=408">
 An easy-to-implement configuration file syncing library.<br>
-**CSync** is game-independent and should work for any **BepInEx** supported game!
 
-The [wiki](https://github.com/Owen3H/CSync/wiki) should cover all you need to start using this library.\
+The [wiki](https://github.com/Owen3H/CSync/wiki) should cover all you need to start using CSync.\
 Join my [discord](https://discord.gg/CMyTmUMP2P) to contact me.
 
 > [!IMPORTANT]
