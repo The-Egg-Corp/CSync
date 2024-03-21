@@ -1,8 +1,10 @@
 using BepInEx;
 using BepInEx.Logging;
-
 using HarmonyLib;
 using System;
+
+using CSync.Patches.LethalCompany;
+using CSync.Core;
 
 namespace CSync;
 
@@ -14,22 +16,33 @@ namespace CSync;
 public class Plugin : BaseUnityPlugin {
     internal static new ManualLogSource Logger { get; private set; }
     
-    const string GUID = $"io.github.{MyPluginInfo.PLUGIN_NAME}";
-    const string NAME = MyPluginInfo.PLUGIN_NAME;
-    const string VERSION = MyPluginInfo.PLUGIN_VERSION;
+    public const string GUID = $"io.github.{MyPluginInfo.PLUGIN_NAME}";
+    public const string NAME = MyPluginInfo.PLUGIN_NAME;
+    public const string VERSION = MyPluginInfo.PLUGIN_VERSION;
 
-    Harmony Patcher;
+    readonly Harmony Patcher = new(GUID);
+    internal static new CSyncConfig Config { get; private set; }
 
     private void Awake() {
         Logger = base.Logger;
+        Config = new(base.Config);
 
-        try {
+        if (!Config.ENABLE_PATCHING.Value) {
+            return;
+        }
+
             Patcher = new(GUID);
-            Patcher.PatchAll();
+        var game = AppDomain.CurrentDomain.FriendlyName.Replace(".exe", "");
+        if (game == "Lethal Company" || game == "LethalCompany") {
+            Logger.LogInfo("Applying Lethal Company patches.");
 
-            Logger.LogInfo("CSync successfully applied patches.");
-        } catch(Exception e) {
-            Logger.LogError(e);
+            try {
+                Patcher.PatchAll(typeof(JoinPatch_LC));
+                Patcher.PatchAll(typeof(LeavePatch_LC));
+            }
+            catch (Exception e) {
+                Logger.LogError(e);
+            }
         }
     }
 }

@@ -75,7 +75,7 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
             using FastBufferWriter s = new(IntSize, Allocator.Temp);
             s.SendMessage(GUID, "OnHostDisabledSyncing", clientId);
 
-            LogDebug($"{GUID} - The host (you) has disabled syncing, sending clients a message!");
+            LogDebug($"{GUID} - The host (you) has syncing disabled! Informing other clients..");
             return;
         }
 
@@ -122,6 +122,6 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
 
     internal void OnHostDisabledSyncing(ulong _, FastBufferReader reader) {
         OnSyncCompleted();
-        LogDebug($"{GUID} - Host disabled syncing. The SyncComplete event will still be invoked.");
+        LogDebug($"{GUID} - The host has disabled syncing. Invoking the SyncComplete event..");
     }
 }

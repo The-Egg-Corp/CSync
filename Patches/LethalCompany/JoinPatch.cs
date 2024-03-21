@@ -2,10 +2,10 @@ using CSync.Lib;
 using GameNetcodeStuff;
 using HarmonyLib;
 
-namespace CSync.Patches;
+namespace CSync.Patches.LethalCompany;
 
 [HarmonyPatch(typeof(PlayerControllerB))]
-internal class JoinPatch {
+internal class JoinPatch_LC {
     [HarmonyPostfix]
     [HarmonyPatch("ConnectClientToPlayerObject")]
     private static void SyncOnJoin() {
