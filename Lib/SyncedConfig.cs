@@ -32,7 +32,7 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
     /// </summary>
     public readonly string GUID = guid;
 
-    internal SyncedEntry<bool> SYNC_TO_CLIENTS { get; private set; } = null;
+    internal SyncedEntry<bool> SYNC_TO_CLIENTS { get; private set; }
 
     /// <summary>
     /// Allow the host to control whether clients can use their own config.
