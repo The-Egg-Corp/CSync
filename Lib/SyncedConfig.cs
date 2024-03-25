@@ -19,21 +19,19 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
         MessageManager.RegisterNamedMessageHandler($"{GUID}_{name}", callback); 
 
     /// <summary>
-    /// Invoked on the host when a client requests to sync.
-    /// </summary>
-    [field:NonSerialized] public event EventHandler SyncRequested;
-    internal void OnSyncRequested() => SyncRequested?.Invoke(this, EventArgs.Empty);
-
-    /// <summary>
-    /// Invoked on the client when they receive the host config.
-    /// </summary>
-    [field:NonSerialized] public event EventHandler SyncReceived;
-    internal void OnSyncReceived() => SyncReceived?.Invoke(this, EventArgs.Empty);
-
-    /// <summary>
-    /// The mod name or abbreviation. After being given to the constructor, it cannot be changed.
+    /// The unique name or abbreviation of the implementing mod.<br></br>
+    /// After passing this to the constructor, it will never change.
     /// </summary>
     public readonly string GUID = guid;
+
+    /// <summary>Invoked on the host when a client requests to sync.</summary>
+    [field:NonSerialized] public event EventHandler SyncRequested;
+
+    /// <summary>Invoked on the client when they receive the host config.</summary>
+    [field:NonSerialized] public event EventHandler SyncReceived;
+
+    internal void OnSyncRequested() => SyncRequested?.Invoke(this, EventArgs.Empty);
+    internal void OnSyncReceived() => SyncReceived?.Invoke(this, EventArgs.Empty);
 
     internal SyncedEntry<bool> SYNC_TO_CLIENTS { get; private set; }
 
