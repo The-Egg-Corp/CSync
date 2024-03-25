@@ -1,8 +1,12 @@
-using CSync.Util;
 using System;
+using CSync.Util;
 using Unity.Netcode;
 
 namespace CSync.Lib;
+
+public class SyncEventArgs(bool succeeded) : EventArgs {
+    public bool IsSuccess { get; private set; } = succeeded;
+}
 
 /// <summary>
 /// Generic class that can be serialized to bytes.<br></br>
@@ -28,26 +32,18 @@ public class SyncedInstance<T> : ByteSerializer<T> where T : class {
     /// </summary>
     public static T Instance { get; private set; }
 
-    /// <summary>
-    /// Invoked when deserialization of data has finished and <see cref="Instance"/> is assigned to.
-    /// </summary>
+    /// <summary>Invoked when deserialization of data has finished and <see cref="Instance"/> is assigned to.</summary>
     [field:NonSerialized] public event EventHandler SyncComplete;
-    internal void OnSyncCompleted() => SyncComplete?.Invoke(this, EventArgs.Empty);
+    internal void OnSyncCompleted() => SyncComplete?.Invoke(this, new SyncEventArgs(Synced));
 
-    /// <summary>
-    /// Invoked when <see cref="Instance"/> is set back to <see cref="Default"/> and no longer synced.
-    /// </summary>
+    /// <summary>Invoked when <see cref="Instance"/> is set back to <see cref="Default"/> and no longer synced.</summary>
     [field:NonSerialized] public event EventHandler SyncReverted;
     internal void OnSyncReverted() => SyncReverted?.Invoke(this, EventArgs.Empty);
     
-    /// <summary>
-    /// Whether this instance has been synchronized.
-    /// </summary>
+    /// <summary>Whether this instance has been synchronized.</summary>
     public static bool Synced;
 
-    /// <summary>
-    /// Assigns both the default and current instances to the inputted instance.
-    /// </summary>
+    /// <summary>Assigns both the default and current instances to the inputted instance.</summary>
     public void InitInstance(T instance) {
         Default = instance;
         Instance = instance;

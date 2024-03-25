@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace CSync.Util;
+namespace CSync.Util.Types;
 
 [Serializable]
 public class SVector3(float _x, float _y, float _z) {

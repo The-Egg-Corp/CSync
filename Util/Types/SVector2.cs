@@ -1,11 +1,11 @@
 using System;
 using UnityEngine;
 
-namespace CSync.Util;
+namespace CSync.Util.Types;
 
 [Serializable]
 public class SVector2(float _x, float _y) {
-    public float x = _x; 
+    public float x = _x;
     public float y = _y;
 
     public override string ToString() => string.Format("[{0}, {1}]", x, y);

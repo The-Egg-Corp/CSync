@@ -1,8 +1,8 @@
 using System;
+using CSync.Util;
 using Unity.Collections;
 using Unity.Netcode;
-
-using CSync.Util;
+using static Unity.Netcode.CustomMessagingManager;
 
 namespace CSync.Lib;
 
@@ -14,6 +14,9 @@ namespace CSync.Lib;
 public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable where T : class {
     static void LogErr(string str) => Plugin.Logger.LogError(str);
     static void LogDebug(string str) => Plugin.Logger.LogDebug(str);
+
+    void RegisterMessage(string name, HandleNamedMessageDelegate callback) => 
+        MessageManager.RegisterNamedMessageHandler($"{GUID}_{name}", callback); 
 
     /// <summary>
     /// Invoked on the host when a client requests to sync.
@@ -47,26 +50,30 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
         };
     }
 
-    void ISynchronizable.SetupSync() {
+    void ISynchronizable.RegisterMessages() {
         if (IsHost) {
-            MessageManager.RegisterNamedMessageHandler($"{GUID}_OnRequestConfigSync", OnRequestSync);
+            RegisterMessage("OnRequestConfigSync", OnRequestSync);
             return;
         }
 
-        MessageManager.RegisterNamedMessageHandler($"{GUID}_OnHostDisabledSyncing", OnHostDisabledSyncing);
-        MessageManager.RegisterNamedMessageHandler($"{GUID}_OnReceiveConfigSync", OnReceiveSync);
+        RegisterMessage("OnHostDisabledSyncing", OnHostDisabledSyncing);
+        RegisterMessage("OnReceiveConfigSync", OnReceiveSync);
+
         RequestSync();
     }
+
+    void ISynchronizable.RequestSync() => RequestSync();
 
     void RequestSync() {
         if (!IsClient) return;
 
         using FastBufferWriter stream = new(IntSize, Allocator.Temp);
 
-        // Method `OnRequestSync` will then get called on the host.
+        // No ID specified, `OnRequestSync` will be called on the host.
         stream.SendMessage(GUID, "OnRequestConfigSync");
     }
 
+    // Invoked on host
     internal void OnRequestSync(ulong clientId, FastBufferReader _) {
         if (!IsHost) return;
         OnSyncRequested();
@@ -96,6 +103,7 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
         }
     }
 
+    // Invoked on client
     internal void OnReceiveSync(ulong _, FastBufferReader reader) {
         OnSyncReceived();
 
@@ -121,7 +129,9 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
     }
 
     internal void OnHostDisabledSyncing(ulong _, FastBufferReader reader) {
+        Synced = false;
         OnSyncCompleted();
+
         LogDebug($"{GUID} - The host has disabled syncing. Invoking the SyncComplete event..");
     }
 }

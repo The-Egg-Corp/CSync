@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace CSync.Util;
+namespace CSync.Util.Types;
 
 [Serializable]
 public class SQuaternion(float _x, float _y, float _z, float _w) {

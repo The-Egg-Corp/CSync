@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace CSync.Util;
+namespace CSync.Util.Types;
 
 [Serializable]
 public class SColor {
@@ -18,7 +18,7 @@ public class SColor {
         SetRGBA(col);
     }
 
-    void SetRGBA(Color color) {
+    public void SetRGBA(Color color) {
         r = color.r;
         g = color.g;
         b = color.b;

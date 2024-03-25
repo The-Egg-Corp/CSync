@@ -1,7 +1,8 @@
-using BepInEx.Configuration;
-using BepInEx;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using BepInEx;
+using BepInEx.Configuration;
 using HarmonyLib;
 
 namespace CSync.Lib;
@@ -13,6 +14,14 @@ namespace CSync.Lib;
 public class ConfigManager {
     internal static Dictionary<string, ConfigFile> FileCache = [];
     internal static Dictionary<string, ISynchronizable> Instances = [];
+
+    internal static bool InitialSyncComplete = false;
+
+    /// <summary>
+    /// Invoked once all the instances have been synced for the first time.
+    /// </summary>
+    [field: NonSerialized] public static event EventHandler InitialSyncCompleted;
+    static void OnInitialSyncCompleted() => InitialSyncCompleted?.Invoke(null, EventArgs.Empty);
 
     internal static ConfigFile GetConfigFile(string fileName) {
         bool exists = FileCache.TryGetValue(fileName, out ConfigFile cfg);
@@ -46,11 +55,17 @@ public class ConfigManager {
         Instances.Add(guid, config);
     }
 
-    internal static void SyncInstances() => Instances.Values.Do(i => i.SetupSync());
+    internal static void ResyncInstances() {
+        if (!InitialSyncComplete) return;
+        Instances.Values.Do(i => i.RequestSync());
+    }
+
+    internal static void SyncInstances() => Instances.Values.Do(i => i.RegisterMessages());
     internal static void RevertSyncedInstances() => Instances.Values.Do(i => i.RevertSync());
 }
 
 public interface ISynchronizable {
-    void SetupSync();
+    void RegisterMessages();
+    void RequestSync();
     void RevertSync();
 }

@@ -3,7 +3,7 @@
     <TargetFrameworks>netstandard2.1;net472;net48</TargetFrameworks>
     <AssemblyName>CSync</AssemblyName>
     <Description>Configuration file syncing library for BepInEx.</Description>
-    <Version>2.2.4</Version>
+    <Version>2.3.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <RestoreAdditionalProjectSources>
@@ -67,6 +67,9 @@
     </Reference>
     <Reference Include="Unity.Netcode.Runtime">
       <HintPath>E:\SteamLibrary\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Unity.Netcode.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>E:\SteamLibrary\steamapps\common\Lethal Company\Lethal Company_Data\Managed\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   
