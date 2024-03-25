@@ -4,8 +4,8 @@ using Unity.Netcode;
 
 namespace CSync.Lib;
 
-public class SyncEventArgs(bool succeeded) : EventArgs {
-    public bool IsSuccess { get; private set; } = succeeded;
+public class SyncEventArgs(bool success) : EventArgs {
+    public bool Succeeded { get; private set; } = success;
 }
 
 /// <summary>
