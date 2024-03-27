@@ -2,14 +2,16 @@
 An easy-to-implement configuration file syncing library.<br>
 The [wiki](https://github.com/Owen3H/CSync/wiki) should cover all you need to start using CSync.
 
+This library is still developing and as such, reliability is not guaranteed.<br>
+Though slightly harder to setup, **Netcode Patcher** and **NetworkBehaviour** are still recommended. 
+
 > [!IMPORTANT]
 > - This is **NOT** a standalone mod, it is intended for mod developers and does nothing on its own!<br>
 > - This does **NOT** edit or replace config files directly, everything is done in-memory.<br>
 > - It will **NOT** sync configs from mods that aren't dependent upon it.<br>
-> - CSync uses Unity's [Named Messages](https://docs-multiplayer.unity3d.com/netcode/current/advanced-topics/message-system/custom-messages/#name-message-example) to avoid **Netcode Patcher** and **NetworkBehaviour**.
 
 > [!NOTE]
-> Using a mirror is not recommended as CSync will continue to be updated.\
+> Using a mirror is not recommended as CSync will continue to be updated.<br>
 > If you have a suggestion or want something fixed, I'm all ears.
 
 ## Features
