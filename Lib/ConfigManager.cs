@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using BepInEx;
@@ -14,12 +13,6 @@ namespace CSync.Lib;
 public class ConfigManager {
     internal static Dictionary<string, ConfigFile> FileCache = [];
     internal static Dictionary<string, ISynchronizable> Instances = [];
-
-    /// <summary>
-    /// Invoked once all the instances have been synced for the first time.
-    /// </summary>
-    [field: NonSerialized] public static event EventHandler InitialSyncCompleted;
-    static void OnInitialSyncCompleted() => InitialSyncCompleted?.Invoke(null, EventArgs.Empty);
 
     internal static ConfigFile GetConfigFile(string fileName) {
         bool exists = FileCache.TryGetValue(fileName, out ConfigFile cfg);

@@ -7,7 +7,7 @@ namespace CSync.Patches.LethalCompany;
 internal class LeavePatch_LC {
     [HarmonyPostfix]
     [HarmonyPatch("StartDisconnect")]
-    private static void RevertOnDisconnect() {
+    static void RevertOnDisconnect() {
         ConfigManager.RevertSyncedInstances();
     }
 }

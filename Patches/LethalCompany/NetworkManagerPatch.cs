@@ -10,7 +10,7 @@ internal class NetworkManagerPatch {
     
     [HarmonyPostfix]
     [HarmonyPatch("InvokeOnClientConnectedCallback")]
-    private static void OnConnected(ulong clientId) {
+    static void OnConnected(ulong clientId) {
         ConfigManager.SyncInstances();
 
         if (!HasAuthority) {

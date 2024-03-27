@@ -8,7 +8,7 @@ namespace CSync.Patches.LethalCompany;
 internal class JoinPatch_LC {
     [HarmonyPostfix]
     [HarmonyPatch("ConnectClientToPlayerObject")]
-    private static void SyncOnJoin() {
+    static void SyncOnJoin() {
         ConfigManager.SyncInstances();
     }
 }
