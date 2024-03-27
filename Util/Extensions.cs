@@ -9,38 +9,33 @@ namespace CSync.Util;
 /// Contains helpful extension methods to aid with synchronization and reduce code duplication.
 /// </summary>
 public static class Extensions {
-    /// <summary>
-    /// Binds an entry to this file and returns the converted synced entry.
-    /// </summary>
-    /// <param name="cfg">The currently selected config file.</param>
-    /// <param name="section">The category that this entry should show under.</param>
-    /// <param name="key">The name/identifier of this entry.</param>
-    /// <param name="defaultVal">The value assigned to this entry if not changed.</param>
-    /// <param name="desc">The description indicating what this entry does.</param>
+    #region ConfigFile bind overloads
     public static SyncedEntry<V> BindSyncedEntry<V>(this ConfigFile cfg, 
-        string section, string key, V defaultVal, string desc
+        ConfigDefinition definition, V defaultVal, ConfigDescription desc
     ) {
-        return cfg.Bind(section, key, defaultVal, desc).ToSyncedEntry();
-    }
-
-    public static SyncedEntry<V> BindSyncedEntry<V>(this ConfigFile cfg, 
-        string section, string key, V defaultVal, ConfigDescription desc
-    ) {
-        return cfg.BindSyncedEntry(section, key, defaultVal, desc.Description);
+       return cfg.Bind(definition, defaultVal, desc).ToSyncedEntry();
     }
 
     public static SyncedEntry<T> BindSyncedEntry<T>(this ConfigFile cfg,
-        ConfigDefinition definition, T defaultValue, ConfigDescription desc = null
+        string section, string key, T defaultValue, ConfigDescription desc = null
     ) {
-        return cfg.BindSyncedEntry(definition.Section, definition.Key, defaultValue, desc.Description);
+        return cfg.Bind(new(section, key), defaultValue, desc).ToSyncedEntry();
+    }
+
+    public static SyncedEntry<T> BindSyncedEntry<T>(this ConfigFile cfg,
+        string section, string key, T defaultValue, string desc
+    ) {
+        return cfg.Bind(new(section, key), defaultValue, new(desc)).ToSyncedEntry();
     }
 
     public static SyncedEntry<T> BindSyncedEntry<T>(this ConfigFile cfg,
         ConfigDefinition definition, T defaultValue, string desc
     ) {
-        return cfg.BindSyncedEntry(definition.Section, definition.Key, defaultValue, desc);
+        return cfg.Bind(definition, defaultValue, new(desc)).ToSyncedEntry();
     }
+    #endregion
 
+    #region Utils to help serialize a ConfigEntry
     /// <summary>Converts this entry into a serializable alternative, allowing it to be synced.</summary>
     public static SyncedEntry<V> ToSyncedEntry<V>(this ConfigEntry<V> entry) => new(entry);
 
@@ -54,6 +49,7 @@ public static class Extensions {
 
         return cfg.Bind(definition, info.GetObject<V>("DefaultValue"), description);
     }
+    #endregion
 
     /// <summary>
     /// Sends a message using this stream to a client via their ID.<br></br>
