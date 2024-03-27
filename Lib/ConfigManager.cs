@@ -15,8 +15,6 @@ public class ConfigManager {
     internal static Dictionary<string, ConfigFile> FileCache = [];
     internal static Dictionary<string, ISynchronizable> Instances = [];
 
-    internal static bool InitialSyncComplete = false;
-
     /// <summary>
     /// Invoked once all the instances have been synced for the first time.
     /// </summary>
@@ -55,17 +53,14 @@ public class ConfigManager {
         Instances.Add(guid, config);
     }
 
-    internal static void ResyncInstances() {
-        if (!InitialSyncComplete) return;
-        Instances.Values.Do(i => i.RequestSync());
-    }
-
     internal static void SyncInstances() => Instances.Values.Do(i => i.RegisterMessages());
+    internal static void ResyncInstances() => Instances.Values.Do(i => i.Resync());
     internal static void RevertSyncedInstances() => Instances.Values.Do(i => i.RevertSync());
 }
 
 public interface ISynchronizable {
     void RegisterMessages();
+    void Resync();
     void RequestSync();
     void RevertSync();
 }

@@ -4,7 +4,7 @@ using Unity.Netcode;
 
 namespace CSync.Lib;
 
-public class SyncEventArgs(bool success) : EventArgs {
+public class SyncArgs(bool success) : EventArgs {
     public bool Succeeded { get; private set; } = success;
 }
 
@@ -33,8 +33,8 @@ public class SyncedInstance<T> : ByteSerializer<T> where T : class {
     public static T Instance { get; private set; }
 
     /// <summary>Invoked when deserialization of data has finished and <see cref="Instance"/> is assigned to.</summary>
-    [field:NonSerialized] public event EventHandler SyncComplete;
-    internal void OnSyncCompleted() => SyncComplete?.Invoke(this, new SyncEventArgs(Synced));
+    [field:NonSerialized] public event EventHandler<SyncArgs> SyncComplete;
+    internal void OnSyncCompleted() => SyncComplete?.Invoke(this, new(Synced));
 
     /// <summary>Invoked when <see cref="Instance"/> is set back to <see cref="Default"/> and no longer synced.</summary>
     [field:NonSerialized] public event EventHandler SyncReverted;

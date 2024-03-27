@@ -33,6 +33,8 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
     internal void OnSyncRequested() => SyncRequested?.Invoke(this, EventArgs.Empty);
     internal void OnSyncReceived() => SyncReceived?.Invoke(this, EventArgs.Empty);
 
+    internal bool MessagesRegistered = false;
+
     internal SyncedEntry<bool> SYNC_TO_CLIENTS { get; private set; }
 
     /// <summary>
@@ -48,6 +50,11 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
         };
     }
 
+    public void Resync() {
+        if (!MessagesRegistered) return;
+        RequestSync();
+    }
+
     void ISynchronizable.RegisterMessages() {
         if (IsHost) {
             RegisterMessage("OnRequestConfigSync", OnRequestSync);
@@ -56,6 +63,8 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
 
         RegisterMessage("OnHostDisabledSyncing", OnHostDisabledSyncing);
         RegisterMessage("OnReceiveConfigSync", OnReceiveSync);
+
+        MessagesRegistered = true;
 
         RequestSync();
     }
