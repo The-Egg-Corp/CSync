@@ -11,7 +11,7 @@ namespace CSync.Util;
 public static class Extensions {
     #region ConfigFile bind overloads
     public static SyncedEntry<V> BindSyncedEntry<V>(this ConfigFile cfg, 
-        ConfigDefinition definition, V defaultVal, ConfigDescription desc
+        ConfigDefinition definition, V defaultVal, ConfigDescription desc = null
     ) {
        return cfg.Bind(definition, defaultVal, desc).ToSyncedEntry();
     }
