@@ -27,12 +27,18 @@ public class Plugin : BaseUnityPlugin {
         Logger = base.Logger;
         Config = new(base.Config);
 
-        if (!Config.ENABLE_PATCHING.Value) {
-            return;
+        if (!Config.ENABLE_PATCHING.Value) return;
+        
+        try {
+            Patcher = new(GUID);
+            Patcher.PatchAll(typeof(NetworkManagerPatch));
+        } catch(Exception e) {
+            Logger.LogError($"Failed to apply necessary patches!!\n{e}");
         }
 
-        Patcher = new(GUID);
+        if (!Config.GAME_DETECTION.Value) return;
 
+        #region Detect game and apply tailored patches.
         using var process = Process.GetCurrentProcess();
         var game = process.MainModule.ModuleName.Replace(".exe", "");
 
@@ -40,12 +46,12 @@ public class Plugin : BaseUnityPlugin {
             Logger.LogInfo("Applying Lethal Company patches.");
 
             try {
-                Patcher.PatchAll(typeof(NetworkManagerPatch));
                 //Patcher.PatchAll(typeof(LethalConfigPatch));
             }
             catch (Exception e) {
                 Logger.LogError(e);
             }
         }
+        #endregion
     }
 }
