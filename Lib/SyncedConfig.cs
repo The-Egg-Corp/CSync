@@ -25,13 +25,13 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
     public readonly string GUID = guid;
 
     /// <summary>Invoked on the host when a client requests to sync.</summary>
-    [field:NonSerialized] public event EventHandler SyncRequested;
+    [field:NonSerialized] public Action<ulong> SyncRequested;
 
     /// <summary>Invoked on the client when they receive the host config.</summary>
-    [field:NonSerialized] public event EventHandler SyncReceived;
+    [field:NonSerialized] public Action SyncReceived;
 
-    internal void OnSyncRequested() => SyncRequested?.Invoke(this, EventArgs.Empty);
-    internal void OnSyncReceived() => SyncReceived?.Invoke(this, EventArgs.Empty);
+    internal void OnSyncRequested(ulong clientId) => SyncRequested?.Invoke(clientId);
+    internal void OnSyncReceived() => SyncReceived?.Invoke();
 
     internal bool MessagesRegistered = false;
 
@@ -50,6 +50,10 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
         };
     }
 
+    /// <summary>
+    /// Enables the client to request a resync with the host.<br></br>
+    /// This will only work once messages are registered, usually just before the initial sync.
+    /// </summary>
     public void Resync() {
         if (!MessagesRegistered) return;
         RequestSync();
@@ -83,7 +87,7 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
     // Invoked on host
     internal void OnRequestSync(ulong clientId, FastBufferReader _) {
         if (!IsHost) return;
-        OnSyncRequested();
+        OnSyncRequested(clientId);
 
         if (SYNC_TO_CLIENTS != null && SYNC_TO_CLIENTS == false) {
             using FastBufferWriter s = new(IntSize, Allocator.Temp);
@@ -136,8 +140,7 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
     }
 
     internal void OnHostDisabledSyncing(ulong _, FastBufferReader reader) {
-        Synced = false;
-        OnSyncCompleted();
+        OnSyncCompleted(false);
 
         LogDebug($"{GUID} - The host has disabled syncing. Invoking the SyncComplete event..");
     }

@@ -4,10 +4,6 @@ using Unity.Netcode;
 
 namespace CSync.Lib;
 
-public class SyncArgs(bool success) : EventArgs {
-    public bool Succeeded { get; private set; } = success;
-}
-
 /// <summary>
 /// Generic class that can be serialized to bytes.<br></br>
 /// Handles syncing and reverting as well as holding references to the client-side and synchronized instances.<br></br>
@@ -33,16 +29,13 @@ public class SyncedInstance<T> : ByteSerializer<T> where T : class {
     public static T Instance { get; private set; }
 
     /// <summary>Invoked when deserialization of data has finished and <see cref="Instance"/> is assigned to.</summary>
-    [field:NonSerialized] public event EventHandler<SyncArgs> SyncComplete;
-    internal void OnSyncCompleted() => SyncComplete?.Invoke(this, new(Synced));
+    [field:NonSerialized] public Action<bool> SyncComplete;
+    internal void OnSyncCompleted(bool success) => SyncComplete?.Invoke(success);
 
     /// <summary>Invoked when <see cref="Instance"/> is set back to <see cref="Default"/> and no longer synced.</summary>
-    [field:NonSerialized] public event EventHandler SyncReverted;
-    internal void OnSyncReverted() => SyncReverted?.Invoke(this, EventArgs.Empty);
-    
-    /// <summary>Whether this instance has been synchronized.</summary>
-    public static bool Synced;
-
+    [field:NonSerialized] public Action SyncReverted;
+    internal void OnSyncReverted() => SyncReverted?.Invoke();
+   
     /// <summary>Assigns both the default and current instances to the inputted instance.</summary>
     public void InitInstance(T instance) {
         Default = instance;
@@ -51,15 +44,11 @@ public class SyncedInstance<T> : ByteSerializer<T> where T : class {
     
     public void SyncInstance(byte[] data) {
         Instance = DeserializeFromBytes(data);
-        Synced = Instance != default(T);
-
-        OnSyncCompleted();
+        OnSyncCompleted(Instance != default(T));
     }
 
     public void RevertSync() {
         Instance = Default;
-        Synced = false;
-
         OnSyncReverted();
     }
 }

@@ -43,7 +43,7 @@ public class Plugin : BaseUnityPlugin {
         var game = process.MainModule.ModuleName.Replace(".exe", "");
 
         if (game == "Lethal Company" || game == "LethalCompany") {
-            Logger.LogInfo("Applying Lethal Company patches.");
+            Logger.LogInfo("\nDetected game: {game}\nApplying game specific patches..");
 
             try {
                 //Patcher.PatchAll(typeof(LethalConfigPatch));
