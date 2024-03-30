@@ -56,6 +56,9 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
     /// </summary>
     public void Resync() {
         if (!MessagesRegistered) return;
+
+        Plugin.Logger.LogDebug($"{GUID} - A config resync was requested.");
+
         RequestSync();
     }
 
