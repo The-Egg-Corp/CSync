@@ -2,7 +2,7 @@ using System;
 using BepInEx;
 using BepInEx.Logging;
 using CSync.Core;
-using CSync.Patches.LethalCompany;
+using CSync.Patches;
 using HarmonyLib;
 
 namespace CSync;

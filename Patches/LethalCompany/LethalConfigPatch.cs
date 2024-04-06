@@ -1,3 +1,4 @@
+using CSync.Lib;
 using HarmonyLib;
 
 using UnityEngine.UI;
@@ -16,5 +17,6 @@ internal class LethalConfigPatch {
         if (!isApply) return;
 
         // If we are the host, make all clients resync.
+        ConfigManager.ResyncInstances();
     }
 }
