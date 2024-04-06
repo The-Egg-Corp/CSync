@@ -1,8 +1,10 @@
 using System;
+using System.Diagnostics;
 using BepInEx;
 using BepInEx.Logging;
 using CSync.Core;
 using CSync.Patches;
+using CSync.Patches.LethalCompany;
 using HarmonyLib;
 
 namespace CSync;
@@ -35,22 +37,23 @@ public class Plugin : BaseUnityPlugin {
             Logger.LogError($"Failed to apply necessary patches!!\n{e}");
         }
 
-        //if (!Config.GAME_DETECTION.Value) return;
+        if (!Config.GAME_DETECTION.Value)
+            return;
 
-        //#region Detect game and apply tailored patches.
-        //using var process = Process.GetCurrentProcess();
-        //var game = process.MainModule.ModuleName.Replace(".exe", "");
+        #region Detect game and apply tailored patches.
+        using var process = Process.GetCurrentProcess();
+        var game = process.MainModule.ModuleName.Replace(".exe", "");
 
-        //if (game == "Lethal Company" || game == "LethalCompany") {
-        //    Logger.LogInfo("\nDetected game: {game}\nApplying game specific patches..");
+        if (game == "Lethal Company" || game == "LethalCompany") {
+            Logger.LogInfo("\nDetected game: {game}\nApplying game specific patches..");
 
-        //    try {
-        //        //Patcher.PatchAll(typeof(LethalConfigPatch));
-        //    }
-        //    catch (Exception e) {
-        //        Logger.LogError(e);
-        //    }
-        //}
-        //#endregion
+            try {
+                Patcher.PatchAll(typeof(LethalConfigPatch));
+            }
+            catch (Exception e) {
+                Logger.LogError(e);
+            }
+        }
+        #endregion
     }
 }
