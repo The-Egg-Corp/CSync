@@ -1,4 +1,4 @@
-# CSync <img align="right" width="132" height="132" src="https://media.discordapp.net/attachments/1215227926354731029/1217977613176410242/CSyncV69.png?ex=6605fd0b&is=65f3880b&hm=e037a52acf909f9b1605fcaaa67bdb16a41ba194ad04c2cddd675f588d56a4a9&=&format=webp&quality=lossless&width=408&height=408">
+# CSync <img align="right" width="132" height="132" src="https://gcdn.thunderstore.io/live/repository/icons/Owen3H-CSync-2.2.4.png.128x128_q95.png">
 An easy-to-implement configuration file syncing library.<br>
 The [wiki](https://github.com/Owen3H/CSync/wiki) should cover all you need to start using CSync.
 

@@ -24,10 +24,10 @@
     <PackageReadmeFile>nuget.README.md</PackageReadmeFile>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Description>Configuration file syncing library for BepInEx.
-    Allows serialization of a ConfigEntry with a drop in replacement.
-      
-    The wiki/usage guide can be found on GitHub.
-    https://github.com/Owen3H/CSync/wiki
+Allows serialization of a ConfigEntry with a drop in replacement.
+
+The wiki/usage guide can be found on GitHub.
+https://github.com/Owen3H/CSync/wiki
     </Description>
     <PackageTags>config bepinex sync library lethalcompany</PackageTags>
     <PackageIcon>icon.png</PackageIcon>
