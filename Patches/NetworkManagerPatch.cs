@@ -2,12 +2,12 @@ using CSync.Lib;
 using HarmonyLib;
 using Unity.Netcode;
 
-namespace CSync.Patches.LethalCompany;
+namespace CSync.Patches;
 
 [HarmonyPatch(typeof(NetworkConnectionManager))]
 internal class NetworkManagerPatch {
     static bool HasAuthority => NetworkManager.Singleton.IsHost || NetworkManager.Singleton.IsServer;
-    
+
     [HarmonyPostfix]
     [HarmonyPatch("InvokeOnClientConnectedCallback")]
     static void OnConnected(ulong clientId) {
