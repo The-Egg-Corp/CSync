@@ -1,18 +1,13 @@
 # CSync <img align="right" width="132" height="132" src="https://gcdn.thunderstore.io/live/repository/icons/Owen3H-CSync-2.2.4.png.128x128_q95.png">
 An easy-to-implement configuration file syncing library.<br>
-The [wiki](https://github.com/Owen3H/CSync/wiki) should cover all you need to start using CSync.
+The [wiki](../../wiki) should cover all you need to start using CSync.
 
-This library is still developing and as such, reliability is not guaranteed.<br>
-Though slightly harder to setup, **Netcode Patcher** and **NetworkBehaviour** are still recommended. 
+If you have a suggestion or want something fixed, I'm all ears over at my [discord](https://discord.gg/CMyTmUMP2P)! :)
 
 > [!IMPORTANT]
 > - This is **NOT** a standalone mod, it is intended for mod developers and does nothing on its own!<br>
 > - This does **NOT** edit or replace config files directly, everything is done in-memory.<br>
 > - It will **NOT** sync configs from mods that aren't dependent upon it.<br>
-
-> [!NOTE]
-> Using a mirror is not recommended as CSync will continue to be updated.<br>
-> If you have a suggestion or want something fixed, I'm all ears.
 
 ## Features
 - Can serialize a `ConfigEntry` with a drop-in replacement. (`SyncedEntry`)
@@ -20,10 +15,7 @@ Though slightly harder to setup, **Netcode Patcher** and **NetworkBehaviour** ar
 - Uses `DataContractSerializer`, a fast and safer alternative to `BinaryFormatter`.
 - Provides helpful extension methods.
 
-## Contact
-You can reach me at my [discord](https://discord.gg/CMyTmUMP2P) if you need support or just want to chat! :)
-
-## License
+## Disclaimer
 This project has the `CC BY-NC-SA 4.0` license.<br>
 This means the following terms apply:
 
