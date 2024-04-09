@@ -4,7 +4,7 @@ namespace CSync.Core;
 
 internal class CSyncConfig(ConfigFile cfg) {
     public ConfigEntry<bool> ENABLE_PATCHING { get; } = cfg.Bind(Plugin.GUID, "bEnablePatching", true,
-        "Whether to let CSync detect apply necessary game-independent patches.\n" +
+        "Whether to let CSync apply necessary patches.\n" +
         "It is not recommended to disable this unless all of your mods implement their own patches for syncing."
     );
 
