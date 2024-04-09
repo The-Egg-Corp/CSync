@@ -15,8 +15,8 @@ public class ConfigManager {
     internal static Dictionary<string, ISynchronizable> Instances = [];
 
     internal static ConfigFile GetConfigFile(string fileName) {
-        bool exists = FileCache.TryGetValue(fileName, out ConfigFile cfg);
-        if (!exists) {
+        bool found = FileCache.TryGetValue(fileName, out ConfigFile cfg);
+        if (!found) {
             string absPath = Path.Combine(Paths.ConfigPath, fileName);
 
             cfg = new(absPath, false);
