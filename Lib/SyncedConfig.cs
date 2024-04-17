@@ -33,7 +33,7 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
     internal void OnSyncRequested(ulong clientId) => SyncRequested?.Invoke(clientId);
     internal void OnSyncReceived() => SyncReceived?.Invoke();
 
-    internal bool MessagesRegistered = false;
+    //internal bool MessagesRegistered = false;
 
     internal SyncedEntry<bool> SYNC_TO_CLIENTS { get; private set; }
 
@@ -54,13 +54,13 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
     /// Enables the client to request a resync with the host.<br></br>
     /// This will only work once messages are registered, usually just before the initial sync.
     /// </summary>
-    public void Resync() {
-        if (!MessagesRegistered) return;
+    //public void Resync() {
+    //    if (!MessagesRegistered) return;
 
-        Plugin.Logger.LogDebug($"{GUID} - A config resync was requested.");
+    //    Plugin.Logger.LogDebug($"{GUID} - A config resync was requested.");
 
-        RequestSync();
-    }
+    //    RequestSync();
+    //}
 
     void ISynchronizable.RegisterMessages() {
         if (IsHost) {

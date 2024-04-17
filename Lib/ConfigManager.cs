@@ -47,13 +47,13 @@ public class ConfigManager {
     }
 
     internal static void SyncInstances() => Instances.Values.Do(i => i.RegisterMessages());
-    internal static void ResyncInstances() => Instances.Values.Do(i => i.Resync());
+    //internal static void ResyncInstances() => Instances.Values.Do(i => i.Resync());
     internal static void RevertSyncedInstances() => Instances.Values.Do(i => i.RevertSync());
 }
 
 public interface ISynchronizable {
     void RegisterMessages();
-    void Resync();
+    //void Resync();
     void RequestSync();
     void RevertSync();
 }
