@@ -71,7 +71,7 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
         RegisterMessage("OnHostDisabledSyncing", OnHostDisabledSyncing);
         RegisterMessage("OnReceiveConfigSync", OnReceiveSync);
 
-        MessagesRegistered = true;
+        //MessagesRegistered = true;
 
         RequestSync();
     }
@@ -108,7 +108,7 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
         using FastBufferWriter stream = new(value + IntSize, Allocator.Temp);
 
         try {
-            stream.WriteValueSafe(in value, default);
+            stream.WriteValueSafe(value, default);
             stream.WriteBytesSafe(array);
 
             stream.SendMessage(GUID, "OnReceiveConfigSync", clientId);
@@ -138,7 +138,7 @@ public class SyncedConfig<T>(string guid) : SyncedInstance<T>, ISynchronizable w
         try {
             SyncInstance(data);
         } catch(Exception e) {
-            LogErr($"Error syncing config instance!\n{e}");
+            LogErr($"{GUID} - Error syncing config instance!\n{e}");
         }
     }
 
