@@ -1,4 +1,4 @@
-# CSync <img align="right" width="132" height="132" src="https://gcdn.thunderstore.io/live/repository/icons/Owen3H-CSync-2.2.4.png.128x128_q95.png">
+# CSync <img align="right" width="132" height="132" src="https://gcdn.thunderstore.io/live/repository/icons/Owen3H-CSync-2.2.4.png.256x256_q95.png">
 An easy-to-implement configuration file syncing library.<br>
 The [wiki](../../wiki) should cover all you need to start using CSync.
 
